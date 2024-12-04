@@ -2,13 +2,17 @@
     function loadScript(src, callback) {
         const script = document.createElement('script');
         script.src = src;
-        script.async = true; // Asynchrones Laden
+        script.async = true;
         script.onload = () => callback && callback();
         script.onerror = () => console.error(`Failed to load script: ${src}`);
         document.body.appendChild(script);
     }
-    loadScript('https://cdn.botpress.cloud/webchat/v2.2/inject.js', () => {
-        loadScript('https://files.bpcontent.cloud/2024/11/28/12/20241128123057-A1XJ4QN3.js', () => {
+
+    loadScript('https://your-gpt.github.io/widget/config.js', () => {
+        loadScript(config.injectUrl, () => {
+            loadScript('https://files.bpcontent.cloud/2024/11/28/12/20241128123057-A1XJ4QN3.js', () => {
+                // Weitere Aktionen nach dem Laden des Skripts
+            });
         });
     });
 })();
