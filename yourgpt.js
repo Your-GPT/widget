@@ -185,8 +185,7 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
      .bpFab {
         display: none;
       }
-
-    
+      
       .cb-chatbot-button{
         z-index: 9999;
       }
@@ -214,6 +213,7 @@ document.body.appendChild(chatbotButton);
   chatPopupContainer.className = 'cb-chat-popup-container';
   document.body.appendChild(chatPopupContainer);
 
+let isChatbotOpen = false;
 
     
     function loadScript(src, callback) {
@@ -226,7 +226,7 @@ document.body.appendChild(chatbotButton);
     }
 
     function initializeChatbot() {
-        let isChatbotOpen = false;
+        
 
         chatbotButton.addEventListener('click', function() {
             if (window.botpress) {
@@ -255,7 +255,7 @@ document.body.appendChild(chatbotButton);
 
     loadScript('https://your-gpt.github.io/widget/config.js', () => {
         loadScript(config.injectUrl, () => {
-            loadScript('https://files.bpcontent.cloud/2024/11/29/16/20241129164710-Q4J9T79E.js', () => {
+            loadScript('https://files.bpcontent.cloud/2024/11/28/12/20241128123057-A1XJ4QN3.js', () => {
                 // Initialize the chatbot after all scripts are loaded
                 initializeChatbot();
             });
@@ -301,8 +301,8 @@ function getCurrentPage() {
   const path = window.location.pathname;
   if (path === '/' || path === '/index.html') {
     return 'home';
-  } else if (path.includes('ueber-uns')) {
-    return 'ueber-uns';
+  } else if (path.includes('unterhaltsreinigung')) {
+    return 'unterhaltsreinigung';
   } else if (path.includes('bueroreinigung')) {
     return 'bueroreinigung';
   } else if (path.includes('kitareinigung')) {
@@ -362,18 +362,24 @@ function getCurrentPage() {
 
   function initializeChatPopupListeners() {
     chatPopupContainer.addEventListener('click', function(event) {
-      const popup = event.target.closest('.cb-chat-popup');
-      if (popup) {
-        if (event.target.closest('.social-icons a')) {
-          return;
+        const popup = event.target.closest('.cb-chat-popup');
+        if (popup) {
+            if (event.target.closest('.social-icons a')) {
+                // Social-Icon-Links ignorieren
+                return;
+            }
+            
+            // Botpress öffnen
+            if (window.botpress && typeof window.botpress.open === 'function') {
+                window.botpress.open();
+                isChatbotOpen = true;
+            } else {
+                console.error('Bot ist nicht verfügbar oder die open-Funktion fehlt.');
+            }
         }
-        const dfMessenger = document.querySelector('df-messenger');
-        if (dfMessenger) {
-          dfMessenger.setAttribute('expand', 'true');
-        }
-      }
     });
-  }
+}
+
 
   // Initialize components
   initializeChatPopupListeners();
@@ -387,8 +393,8 @@ function getCurrentPage() {
       case 'home':
         message = '👋 Willkommen! Wie kann ich Ihnen helfen?';
         break;
-      case 'ueber-uns':
-        message = '💭 Haben Sie Fragen zu unserem Unternehmen?';
+      case 'unterhaltsreinigung':
+        message = '🔁 Haben Sie Fragen zur regelmäßigen Reinigung?';
         break;
       case 'bueroreinigung':
         message = '💼 Ich kann Ihnen bei Fragen zur Büroreinigung helfen.';
@@ -408,8 +414,8 @@ function getCurrentPage() {
   switch(currentPage) {
     case 'home':
       return '🔎 Haben Sie gefunden was Sie suchen?';
-    case 'ueber-uns':
-      return '👬 Möchten Sie etwas über unser Team wissen?';
+    case 'unterhaltsreinigung':
+      return '🔎 Haben Sie gefunden was Sie suchen?';
     case 'bueroreinigung':
       return '🔎 Haben Sie gefunden was Sie suchen?';
     case 'kitareinigung':
