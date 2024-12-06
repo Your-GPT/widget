@@ -301,8 +301,8 @@ function getCurrentPage() {
   const path = window.location.pathname;
   if (path === '/' || path === '/index.html') {
     return 'home';
-  } else if (path.includes('unterhaltsreinigung')) {
-    return 'unterhaltsreinigung';
+  } else if (path.includes('ueber-uns')) {
+    return 'ueber-uns';
   } else if (path.includes('bueroreinigung')) {
     return 'bueroreinigung';
   } else if (path.includes('kitareinigung')) {
@@ -393,8 +393,8 @@ function getCurrentPage() {
       case 'home':
         message = '👋 Willkommen! Wie kann ich Ihnen helfen?';
         break;
-      case 'unterhaltsreinigung':
-        message = '🔁 Haben Sie Fragen zur regelmäßigen Reinigung?';
+      case 'ueber-uns':
+        message = '💭 Haben Sie Fragen zu unserem Unternehmen?';
         break;
       case 'bueroreinigung':
         message = '💼 Ich kann Ihnen bei Fragen zur Büroreinigung helfen.';
@@ -414,8 +414,8 @@ function getCurrentPage() {
   switch(currentPage) {
     case 'home':
       return '🔎 Haben Sie gefunden was Sie suchen?';
-    case 'unterhaltsreinigung':
-      return '🔎 Haben Sie gefunden was Sie suchen?';
+    case 'ueber-uns':
+      return '🔎 Möchten Sie etwas über unser Team wissen?';
     case 'bueroreinigung':
       return '🔎 Haben Sie gefunden was Sie suchen?';
     case 'kitareinigung':
