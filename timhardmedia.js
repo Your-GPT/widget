@@ -68,8 +68,8 @@
 
     .cb-chat-popup-container {
       position: fixed;
-      bottom: 58px;
-      right: 72px;
+      bottom: 75px;
+      right: 90px;
       display: flex;
       flex-direction: column-reverse;
       align-items: flex-end;
@@ -182,9 +182,7 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
     bottom: 73px;
       }
       
-     .bpFab {
-        display: none;
-      }
+
     }
   `;
 
@@ -194,16 +192,7 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
   document.head.appendChild(styleElement);
   
   
-  // Create Chatbot
-    const chatbotButton = document.createElement('button');
-    chatbotButton.className = 'cb-widget-button cb-chatbot-button';
-    chatbotButton.id = 'chatbotWidgetTrigger';
-    chatbotButton.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-        </svg>
-    `;
-    document.body.appendChild(chatbotButton);
+
     
     
       // Create and append elements for WidgetStack and Popup
@@ -223,33 +212,7 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
         document.body.appendChild(script);
     }
 
-    function initializeChatbot() {
-        let isChatbotOpen = false;
 
-        chatbotButton.addEventListener('click', function() {
-            if (window.botpress) {
-                if (isChatbotOpen) {
-                    if (typeof window.botpress.close === 'function') {
-                        window.botpress.close();
-                        isChatbotOpen = false;
-                        console.log('Chatbot closed');
-                    } else {
-                        console.error('Botpress close function is not available');
-                    }
-                } else {
-                    if (typeof window.botpress.open === 'function') {
-                        window.botpress.open();
-                        isChatbotOpen = true;
-                        console.log('Chatbot opened');
-                    } else {
-                        console.error('Botpress open function is not available');
-                    }
-                }
-            } else {
-                console.error('Botpress is not initialized');
-            }
-        });
-    }
 
     loadScript('https://your-gpt.github.io/widget/config.js', () => {
         loadScript(config.injectUrl, () => {
