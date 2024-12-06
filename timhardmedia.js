@@ -68,8 +68,8 @@
 
     .cb-chat-popup-container {
       position: fixed;
-      bottom: 75px;
-      right: 90px;
+      bottom: 58px;
+      right: 72px;
       display: flex;
       flex-direction: column-reverse;
       align-items: flex-end;
@@ -181,6 +181,15 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
     gap: 6px;
     bottom: 73px;
       }
+      
+     .bpFab {
+        display: none;
+      }
+
+    
+      .cb-chatbot-button{
+        z-index: 9999;
+      }
   `;
 
   // Create style element
@@ -189,7 +198,14 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
   document.head.appendChild(styleElement);
   
   
-
+  // Create Chatbot
+    const chatbotButton = document.createElement('button');
+chatbotButton.className = 'cb-widget-button cb-chatbot-button';
+chatbotButton.id = 'chatbotWidgetTrigger';
+chatbotButton.innerHTML = `
+    <img src="https://images.squarespace-cdn.com/content/641c5981823d0207a111bb74/ebcd84d6-6e0a-48b7-a4f9-a41170c0bbb1/64e9502e4159bed6f8f57b071db5ac7e+%281%29.gif" alt="Chatbot" style="width: 60px; height: 60px;">
+`;
+document.body.appendChild(chatbotButton);
     
     
       // Create and append elements for WidgetStack and Popup
@@ -209,7 +225,33 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
         document.body.appendChild(script);
     }
 
+    function initializeChatbot() {
+        let isChatbotOpen = false;
 
+        chatbotButton.addEventListener('click', function() {
+            if (window.botpress) {
+                if (isChatbotOpen) {
+                    if (typeof window.botpress.close === 'function') {
+                        window.botpress.close();
+                        isChatbotOpen = false;
+                        console.log('Chatbot closed');
+                    } else {
+                        console.error('Botpress close function is not available');
+                    }
+                } else {
+                    if (typeof window.botpress.open === 'function') {
+                        window.botpress.open();
+                        isChatbotOpen = true;
+                        console.log('Chatbot opened');
+                    } else {
+                        console.error('Botpress open function is not available');
+                    }
+                }
+            } else {
+                console.error('Botpress is not initialized');
+            }
+        });
+    }
 
     loadScript('https://your-gpt.github.io/widget/config.js', () => {
         loadScript(config.injectUrl, () => {
@@ -259,8 +301,8 @@ function getCurrentPage() {
   const path = window.location.pathname;
   if (path === '/' || path === '/index.html') {
     return 'home';
-  } else if (path.includes('unterhaltsreinigung')) {
-    return 'unterhaltsreinigung';
+  } else if (path.includes('ueber-uns')) {
+    return 'ueber-uns';
   } else if (path.includes('bueroreinigung')) {
     return 'bueroreinigung';
   } else if (path.includes('kitareinigung')) {
@@ -345,8 +387,8 @@ function getCurrentPage() {
       case 'home':
         message = '👋 Willkommen! Wie kann ich Ihnen helfen?';
         break;
-      case 'unterhaltsreinigung':
-        message = '🔁 Haben Sie Fragen zur regelmäßigen Reinigung?';
+      case 'ueber-uns':
+        message = '💭 Haben Sie Fragen zu unserem Unternehmen?';
         break;
       case 'bueroreinigung':
         message = '💼 Ich kann Ihnen bei Fragen zur Büroreinigung helfen.';
@@ -366,8 +408,8 @@ function getCurrentPage() {
   switch(currentPage) {
     case 'home':
       return '🔎 Haben Sie gefunden was Sie suchen?';
-    case 'unterhaltsreinigung':
-      return '🔎 Haben Sie gefunden was Sie suchen?';
+    case 'ueber-uns':
+      return '👬 Möchten Sie etwas über unser Team wissen?';
     case 'bueroreinigung':
       return '🔎 Haben Sie gefunden was Sie suchen?';
     case 'kitareinigung':
