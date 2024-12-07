@@ -189,6 +189,19 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
       .cb-chatbot-button{
         z-index: 9999;
       }
+
+      .cb-chatbot-button img {
+  /* Existing image styles */
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.cb-chatbot-button:hover img {
+  filter: brightness(0.85);
+  transition: filter 0.5s ease;
+}
   `;
 
   // Create style element
