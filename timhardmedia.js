@@ -34,6 +34,7 @@
       transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.5s ease, opacity 0.5s ease;
       position: relative;
       overflow: hidden;
+      z-index: 9999;
     }
 
     .cb-widget-button svg {
@@ -173,8 +174,8 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
 
 .cb-chatbot-button {
   position: fixed;
-  bottom: 77px;
-  right: 20px;
+  bottom: 84px;
+  right: 16px;
   transform: translateY(calc(100% + 10px));
   padding: 0; /* Remove padding */
   width: 60px; /* Match the image width */
@@ -190,6 +191,12 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
   display: block; /* Remove any inline spacing */
 }
 
+.cb-chatbot-button:hover img {
+  filter: brightness(1.1);
+  transition: filter 0.5s ease;
+}
+
+
       .cb-widget-buttons {
     gap: 6px;
     bottom: 73px;
@@ -198,15 +205,7 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
      .bpFab {
         display: none;
       }
-      
-      .cb-chatbot-button{
-        z-index: 9999;
-      }
 
-.cb-chatbot-button:hover img {
-  filter: brightness(1.1);
-  transition: filter 0.5s ease;
-}
   `;
 
   // Create style element
@@ -220,7 +219,7 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
 chatbotButton.className = 'cb-widget-button cb-chatbot-button';
 chatbotButton.id = 'chatbotWidgetTrigger';
 chatbotButton.innerHTML = `
-    <img src="https://images.squarespace-cdn.com/content/641c5981823d0207a111bb74/62258732-45a6-4fca-a3ed-36bfa3fa3832/bot_animated.gif?content-type=image%2Fgif" alt="Chatbot" style="width: 60px; height: 60px;">
+    <img src="https://images.squarespace-cdn.com/content/641c5981823d0207a111bb74/da6525f0-7988-4a2b-b20b-6ca4e83a0db4/Bildschirmfoto+2024-12-09+um+15.09.34.png?content-type=image%2Fpng" alt="Chatbot" style="width: 60px; height: 60px;">
 `;
 document.body.appendChild(chatbotButton);
     
