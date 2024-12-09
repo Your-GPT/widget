@@ -34,6 +34,7 @@
       transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.5s ease, opacity 0.5s ease;
       position: relative;
       overflow: hidden;
+      z-index: 9999;
     }
 
     .cb-widget-button svg {
@@ -175,6 +176,7 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
   bottom: 77px;
   right: 20px;
   transform: translateY(calc(100% + 10px));
+  z-index: 9999;
 }
 
       .cb-widget-buttons {
