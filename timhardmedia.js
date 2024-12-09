@@ -185,11 +185,23 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
      .bpFab {
         display: none;
       }
-
-    
+      
       .cb-chatbot-button{
         z-index: 9999;
       }
+
+      .cb-chatbot-button img {
+  /* Existing image styles */
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.cb-chatbot-button:hover img {
+  filter: brightness(1.1);
+  transition: filter 0.5s ease;
+}
   `;
 
   // Create style element
@@ -214,6 +226,7 @@ document.body.appendChild(chatbotButton);
   chatPopupContainer.className = 'cb-chat-popup-container';
   document.body.appendChild(chatPopupContainer);
 
+let isChatbotOpen = false;
 
     
     function loadScript(src, callback) {
@@ -226,7 +239,7 @@ document.body.appendChild(chatbotButton);
     }
 
     function initializeChatbot() {
-        let isChatbotOpen = false;
+        
 
         chatbotButton.addEventListener('click', function() {
             if (window.botpress) {
@@ -362,18 +375,24 @@ function getCurrentPage() {
 
   function initializeChatPopupListeners() {
     chatPopupContainer.addEventListener('click', function(event) {
-      const popup = event.target.closest('.cb-chat-popup');
-      if (popup) {
-        if (event.target.closest('.social-icons a')) {
-          return;
+        const popup = event.target.closest('.cb-chat-popup');
+        if (popup) {
+            if (event.target.closest('.social-icons a')) {
+                // Social-Icon-Links ignorieren
+                return;
+            }
+            
+            // Botpress öffnen
+            if (window.botpress && typeof window.botpress.open === 'function') {
+                window.botpress.open();
+                isChatbotOpen = true;
+            } else {
+                console.error('Bot ist nicht verfügbar oder die open-Funktion fehlt.');
+            }
         }
-        const dfMessenger = document.querySelector('df-messenger');
-        if (dfMessenger) {
-          dfMessenger.setAttribute('expand', 'true');
-        }
-      }
     });
-  }
+}
+
 
   // Initialize components
   initializeChatPopupListeners();
@@ -409,7 +428,7 @@ function getCurrentPage() {
     case 'home':
       return '🔎 Haben Sie gefunden was Sie suchen?';
     case 'ueber-uns':
-      return '👬 Möchten Sie etwas über unser Team wissen?';
+      return '🔎 Möchten Sie etwas über unser Team wissen?';
     case 'bueroreinigung':
       return '🔎 Haben Sie gefunden was Sie suchen?';
     case 'kitareinigung':
