@@ -170,11 +170,24 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
   align-items: flex-end;
   gap: 10px;
 }
+
 .cb-chatbot-button {
   position: fixed;
   bottom: 77px;
   right: 20px;
   transform: translateY(calc(100% + 10px));
+  padding: 0; /* Remove padding */
+  width: 60px; /* Match the image width */
+  height: 60px; /* Match the image height */
+  overflow: hidden; /* Ensure content stays within bounds */
+}
+
+.cb-chatbot-button img {
+  width: 100%; /* Fill entire button width */
+  height: 100%; /* Fill entire button height */
+  object-fit: cover; /* Ensure image covers the area */
+  margin: 0; /* Remove margins */
+  display: block; /* Remove any inline spacing */
 }
 
       .cb-widget-buttons {
@@ -189,14 +202,6 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
       .cb-chatbot-button{
         z-index: 9999;
       }
-
-      .cb-chatbot-button img {
-  /* Existing image styles */
-  width: 30px;
-  height: 30px;
-  vertical-align: middle;
-  margin-right: 5px;
-}
 
 .cb-chatbot-button:hover img {
   filter: brightness(1.1);
