@@ -219,7 +219,7 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
 chatbotButton.className = 'cb-widget-button cb-chatbot-button';
 chatbotButton.id = 'chatbotWidgetTrigger';
 chatbotButton.innerHTML = `
-    <img src="https://images.squarespace-cdn.com/content/641c5981823d0207a111bb74/da6525f0-7988-4a2b-b20b-6ca4e83a0db4/Bildschirmfoto+2024-12-09+um+15.09.34.png?content-type=image%2Fpng" alt="Chatbot" style="width: 60px; height: 60px;">
+    <img src="https://images.squarespace-cdn.com/content/641c5981823d0207a111bb74/62258732-45a6-4fca-a3ed-36bfa3fa3832/bot_animated.gif?content-type=image%2Fgif" alt="Chatbot" style="width: 60px; height: 60px;">
 `;
 document.body.appendChild(chatbotButton);
     
