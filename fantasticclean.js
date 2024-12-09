@@ -3,9 +3,9 @@
     const styles = `
 
     :root {
-      --widget-button-color: #20BDBE;
+      --widget-button-color: #BFA35C;
       --widget-icon-color: #f2f2f2;
-      --widget-button-hover-color: #269b9b;
+      --widget-button-hover-color: #937f4c;
     }
 
 .cb-widget-buttons {
@@ -171,13 +171,31 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
   align-items: flex-end;
   gap: 10px;
 }
+
 .cb-chatbot-button {
   position: fixed;
-  bottom: 77px;
-  right: 20px;
+  bottom: 84px;
+  right: 16px;
   transform: translateY(calc(100% + 10px));
-  z-index: 9999;
+  padding: 0; /* Remove padding */
+  width: 60px; /* Match the image width */
+  height: 60px; /* Match the image height */
+  overflow: hidden; /* Ensure content stays within bounds */
 }
+
+.cb-chatbot-button img {
+  width: 100%; /* Fill entire button width */
+  height: 100%; /* Fill entire button height */
+  object-fit: cover; /* Ensure image covers the area */
+  margin: 0; /* Remove margins */
+  display: block; /* Remove any inline spacing */
+}
+
+.cb-chatbot-button:hover img {
+  filter: brightness(1.1);
+  transition: filter 0.5s ease;
+}
+
 
       .cb-widget-buttons {
     gap: 6px;
@@ -187,7 +205,7 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
      .bpFab {
         display: none;
       }
-    }
+
   `;
 
   // Create style element
@@ -198,14 +216,12 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
   
   // Create Chatbot
     const chatbotButton = document.createElement('button');
-    chatbotButton.className = 'cb-widget-button cb-chatbot-button';
-    chatbotButton.id = 'chatbotWidgetTrigger';
-    chatbotButton.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-        </svg>
-    `;
-    document.body.appendChild(chatbotButton);
+chatbotButton.className = 'cb-widget-button cb-chatbot-button';
+chatbotButton.id = 'chatbotWidgetTrigger';
+chatbotButton.innerHTML = `
+    <img src="https://images.squarespace-cdn.com/content/641c5981823d0207a111bb74/da6525f0-7988-4a2b-b20b-6ca4e83a0db4/Bildschirmfoto+2024-12-09+um+15.09.34.png?content-type=image%2Fpng" alt="Chatbot" style="width: 60px; height: 60px;">
+`;
+document.body.appendChild(chatbotButton);
     
     
       // Create and append elements for WidgetStack and Popup
@@ -214,6 +230,7 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
   chatPopupContainer.className = 'cb-chat-popup-container';
   document.body.appendChild(chatPopupContainer);
 
+let isChatbotOpen = false;
 
     
     function loadScript(src, callback) {
@@ -226,7 +243,7 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
     }
 
     function initializeChatbot() {
-        let isChatbotOpen = false;
+        
 
         chatbotButton.addEventListener('click', function() {
             if (window.botpress) {
@@ -301,8 +318,8 @@ function getCurrentPage() {
   const path = window.location.pathname;
   if (path === '/' || path === '/index.html') {
     return 'home';
-  } else if (path.includes('unterhaltsreinigung')) {
-    return 'unterhaltsreinigung';
+  } else if (path.includes('ueber-uns')) {
+    return 'ueber-uns';
   } else if (path.includes('bueroreinigung')) {
     return 'bueroreinigung';
   } else if (path.includes('kitareinigung')) {
@@ -362,18 +379,24 @@ function getCurrentPage() {
 
   function initializeChatPopupListeners() {
     chatPopupContainer.addEventListener('click', function(event) {
-      const popup = event.target.closest('.cb-chat-popup');
-      if (popup) {
-        if (event.target.closest('.social-icons a')) {
-          return;
+        const popup = event.target.closest('.cb-chat-popup');
+        if (popup) {
+            if (event.target.closest('.social-icons a')) {
+                // Social-Icon-Links ignorieren
+                return;
+            }
+            
+            // Botpress öffnen
+            if (window.botpress && typeof window.botpress.open === 'function') {
+                window.botpress.open();
+                isChatbotOpen = true;
+            } else {
+                console.error('Bot ist nicht verfügbar oder die open-Funktion fehlt.');
+            }
         }
-        const dfMessenger = document.querySelector('df-messenger');
-        if (dfMessenger) {
-          dfMessenger.setAttribute('expand', 'true');
-        }
-      }
     });
-  }
+}
+
 
   // Initialize components
   initializeChatPopupListeners();
@@ -387,8 +410,8 @@ function getCurrentPage() {
       case 'home':
         message = '👋 Willkommen! Wie kann ich Ihnen helfen?';
         break;
-      case 'unterhaltsreinigung':
-        message = '🔁 Haben Sie Fragen zur regelmäßigen Reinigung?';
+      case 'ueber-uns':
+        message = '💭 Haben Sie Fragen zu unserem Unternehmen?';
         break;
       case 'bueroreinigung':
         message = '💼 Ich kann Ihnen bei Fragen zur Büroreinigung helfen.';
@@ -408,8 +431,8 @@ function getCurrentPage() {
   switch(currentPage) {
     case 'home':
       return '🔎 Haben Sie gefunden was Sie suchen?';
-    case 'unterhaltsreinigung':
-      return '🔎 Haben Sie gefunden was Sie suchen?';
+    case 'ueber-uns':
+      return '🔎 Möchten Sie etwas über unser Team wissen?';
     case 'bueroreinigung':
       return '🔎 Haben Sie gefunden was Sie suchen?';
     case 'kitareinigung':
