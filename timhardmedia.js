@@ -280,18 +280,54 @@ let isChatbotOpen = false;
     });
     
       // Script logic
-  let lastScrollTop = 0;
-  let buttonsCollapsed = false;
-  let collapseTimeout;
-  let shownPopups = new Set();
-  let maxScrollReached = 0;
-  let pageLoadTime = Date.now();
-  let firstTwoBubblesShown = false;
+let lastScrollTop = 0;
+let maxScrollReached = 0;
+let buttonsCollapsed = true;
+let shownPopups = new Set();
+let widgetButtons;
 
-    window.addEventListener('scroll', function() {
+function collapseButtons() {
+  buttonsCollapsed = true;
+  // Add your button collapsing logic here
+}
+
+function expandButtons() {
+  buttonsCollapsed = false;
+  // Add your button expanding logic here
+}
+
+function getSecondMessage() {
+  // Your logic to get the second message
+  return "This is the second message!";
+}
+
+function showChatPopup(message, duration, socialIcons = false, id = '') {
+  if (shownPopups.has(id || message)) return;
+  shownPopups.add(id || message);
+
+  // Rest of the function remains the same...
+  const popup = document.createElement('div');
+  popup.innerHTML = message;
+  popup.style.position = 'fixed';
+  popup.style.bottom = '20px';
+  popup.style.right = '20px';
+  popup.style.backgroundColor = 'white';
+  popup.style.padding = '20px';
+  popup.style.border = '1px solid #ccc';
+  popup.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
+  document.body.appendChild(popup);
+
+  setTimeout(() => {
+    document.body.removeChild(popup);
+    shownPopups.delete(id || message);
+  }, duration);
+}
+
+
+window.addEventListener('scroll', function() {
   const windowHeight = window.innerHeight;
   const bodyHeight = document.body.scrollHeight;
-  const scrollTop = window.pageYOffset;
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
   const scrollPercentage = (scrollTop / (bodyHeight - windowHeight)) * 100;
 
   // Add the following lines to initialize widgetButtons if it's not already initialized.
@@ -310,8 +346,14 @@ let isChatbotOpen = false;
     expandButtons();
   }
 
-  lastScrollTop = scrollTop; // Update lastScrollTop after each scroll event
+  // Check for 50% scroll to show the second popup
+  if (scrollPercentage >= 50 && !shownPopups.has('second')) {
+    showChatPopup(getSecondMessage(), 5000, false, 'second');
+    shownPopups.add('second');
+  }
 
+  maxScrollReached = Math.max(maxScrollReached, scrollTop);
+  lastScrollTop = scrollTop; // Update lastScrollTop after each scroll event
 });
 
 function getCurrentPage() {
