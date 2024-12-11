@@ -206,6 +206,35 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
         display: none;
       }
 
+      @media (max-width: 768px) {
+      .cb-widget-buttons {
+        left: 20px;
+        right: auto;
+      }
+
+      .cb-chatbot-button {
+        left: 16px;
+        right: auto;
+      }
+
+      .cb-chat-popup-container {
+        left: 72px;
+        right: auto;
+        align-items: flex-start;
+      }
+
+      .cb-chat-popup {
+        border-radius: 20px 20px 20px 0;
+      }
+
+      .cb-chat-popup::after {
+        left: 20px;
+        right: auto;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+      }
+    }
+
   `;
 
   // Create style element
