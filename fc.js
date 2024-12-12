@@ -3,9 +3,9 @@
     const styles = `
 
     :root {
-      --widget-button-color: #BFA35C;
+      --widget-button-color: #20BDBE;
       --widget-icon-color: #f2f2f2;
-      --widget-button-hover-color: #937f4c;
+      --widget-button-hover-color: #20BDBE;
     }
 
 .cb-widget-buttons {
