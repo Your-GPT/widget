@@ -3,10 +3,18 @@
     const styles = `
 
     :root {
-      --widget-button-color: #20BDBE;
       --widget-icon-color: #f2f2f2;
-      --widget-button-hover-color: #20BDBE;
     }
+
+    .cb-widget-button.close-icon {
+    background-color: #ff4444 !important; /* Red background */
+}
+
+.cb-widget-button.close-icon svg {
+    color: white; /* White icon */
+    width: 28px; /* Slightly larger icon */
+    height: 28px;
+}
 
 .cb-widget-buttons {
   position: fixed;
@@ -272,7 +280,7 @@ let isChatbotOpen = false;
         document.body.appendChild(script);
     }
 
-    function initializeChatbot() {
+function initializeChatbot() {
     const closeIconHTML = `
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
             <path fill="currentColor" d="M18.3 5.71a1 1 0 0 0-1.42 0L12 10.59 7.12 5.71a1 1 0 0 0-1.42 1.42L10.59 12l-4.89 4.88a1 1 0 0 0 1.42 1.42L12 13.41l4.88 4.89a1 1 0 0 0 1.42-1.42L13.41 12l4.89-4.88a1 1 0 0 0 0-1.41z"/>
@@ -289,7 +297,8 @@ let isChatbotOpen = false;
                 if (typeof window.botpress.close === 'function') {
                     window.botpress.close();
                     isChatbotOpen = false;
-                    chatbotButton.innerHTML = openIconHTML; // Change to open icon
+                    chatbotButton.innerHTML = openIconHTML;
+                    chatbotButton.classList.remove('close-icon'); // Remove close icon class
                     console.log('Chatbot closed');
                 } else {
                     console.error('Botpress close function is not available');
@@ -298,7 +307,8 @@ let isChatbotOpen = false;
                 if (typeof window.botpress.open === 'function') {
                     window.botpress.open();
                     isChatbotOpen = true;
-                    chatbotButton.innerHTML = closeIconHTML; // Change to close icon
+                    chatbotButton.innerHTML = closeIconHTML;
+                    chatbotButton.classList.add('close-icon'); // Add close icon class
                     console.log('Chatbot opened');
                 } else {
                     console.error('Botpress open function is not available');
