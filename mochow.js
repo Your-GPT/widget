@@ -312,7 +312,7 @@ let isChatbotOpen = false;
 
     loadScript('https://your-gpt.github.io/widget/config.js', () => {
         loadScript(config.injectUrl, () => {
-            loadScript('https://files.bpcontent.cloud/2024/11/28/11/20241128110207-4YHV7PQ4.js', () => {
+            loadScript('https://files.bpcontent.cloud/2025/01/13/18/20250113184929-49BKFOCZ.js', () => {
                 // Initialize the chatbot after all scripts are loaded
                 initializeChatbot();
             });
