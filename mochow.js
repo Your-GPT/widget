@@ -6,8 +6,12 @@
       --widget-icon-color: #f2f2f2;
     }
 
-    .cb-widget-button.close-icon {
-    background-color: #ff4444 !important; /* Red background */
+   .cb-widget-button.close-icon:hover {
+    background-color: #ff4444 !important;
+}
+
+.cb-widget-button.close-icon {
+    background-color: #e63939 !important;
 }
 
 .cb-widget-button.close-icon svg {
