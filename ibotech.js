@@ -292,7 +292,7 @@ function initializeChatbot() {
     `;
 
     const openIconHTML = `
-        <img src="https://images.squarespace-cdn.com/content/641c5981823d0207a111bb74/62258732-45a6-4fca-a3ed-36bfa3fa3832/bot_animated.gif?content-type=image%2Fgif" alt="Chatbot" style="width: 60px; height: 60px;">
+        <img src="https://images.squarespace-cdn.com/content/641c5981823d0207a111bb74/999685ce-589d-4f5f-9763-4e094070fb4b/64e9502e4159bed6f8f57b071db5ac7e+%281%29.gif?content-type=image%2Fgif" alt="Chatbot" style="width: 60px; height: 60px;">
     `;
 
     chatbotButton.addEventListener('click', function() {
