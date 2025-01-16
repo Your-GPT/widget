@@ -57,6 +57,10 @@
       background-color: #da190b;
     }
 
+    .privacy-consent-text {
+      color: black;
+    }
+
    .cb-widget-button.close-icon:hover {
     background-color: #ff4444 !important;
 }
@@ -305,7 +309,7 @@
   const privacyConsent = document.createElement('div');
   privacyConsent.className = 'privacy-consent';
   privacyConsent.innerHTML = `
-      <div>Um Ihnen den bestmöglichen Service zu bieten, verwendet unser Chatbot Cookies und verarbeitet Ihre Daten. Bitte stimmen Sie der Datenverarbeitung zu.</div>
+      <div class="privacy-consent-text">Um Ihnen den bestmöglichen Service zu bieten, verwendet unser Chatbot Cookies und verarbeitet Ihre Daten. Bitte stimmen Sie der Datenverarbeitung zu.</div>
       <div class="privacy-consent-buttons">
           <button class="privacy-consent-accept">Akzeptieren</button>
           <button class="privacy-consent-decline">Ablehnen</button>
