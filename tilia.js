@@ -1,12 +1,24 @@
-(function() {
+ (function() {
     
     const styles = `
 
     :root {
-      --widget-button-color: #AB1043;
       --widget-icon-color: #f2f2f2;
-      --widget-button-hover-color: #8c173c;
     }
+
+   .cb-widget-button.close-icon:hover {
+    background-color: #ff4444 !important;
+}
+
+.cb-widget-button.close-icon {
+    background-color: #e63939 !important;
+}
+
+.cb-widget-button.close-icon svg {
+    color: white; /* White icon */
+    width: 28px; /* Slightly larger icon */
+    height: 28px;
+}
 
 .cb-widget-buttons {
   position: fixed;
@@ -34,6 +46,7 @@
       transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.5s ease, opacity 0.5s ease;
       position: relative;
       overflow: hidden;
+      z-index: 9999;
     }
 
     .cb-widget-button svg {
@@ -170,12 +183,32 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
   align-items: flex-end;
   gap: 10px;
 }
+
 .cb-chatbot-button {
   position: fixed;
-  bottom: 77px;
-  right: 20px;
+  bottom: 84px;
+  right: 16px;
   transform: translateY(calc(100% + 10px));
+  padding: 0; /* Remove padding */
+  width: 60px; /* Match the image width */
+  height: 60px; /* Match the image height */
+  overflow: hidden; /* Ensure content stays within bounds */
 }
+
+
+.cb-chatbot-button img {
+  width: 100%; /* Fill entire button width */
+  height: 100%; /* Fill entire button height */
+  object-fit: cover; /* Ensure image covers the area */
+  margin: 0; /* Remove margins */
+  display: block; /* Remove any inline spacing */
+}
+
+.cb-chatbot-button:hover img {
+  filter: brightness(1.1);
+  transition: filter 0.5s ease;
+}
+
 
       .cb-widget-buttons {
     gap: 6px;
@@ -185,7 +218,36 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
      .bpFab {
         display: none;
       }
+
+      @media (max-width: 768px) {
+      .cb-widget-buttons {
+        left: 20px;
+        right: auto;
+      }
+
+      .cb-chatbot-button {
+        left: 16px;
+        right: auto;
+      }
+
+      .cb-chat-popup-container {
+        left: 72px;
+        right: auto;
+        align-items: flex-start;
+      }
+
+      .cb-chat-popup {
+        border-radius: 20px 20px 20px 0;
+      }
+
+      .cb-chat-popup::after {
+        left: 20px;
+        right: auto;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+      }
     }
+
   `;
 
   // Create style element
@@ -196,14 +258,12 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
   
   // Create Chatbot
     const chatbotButton = document.createElement('button');
-    chatbotButton.className = 'cb-widget-button cb-chatbot-button';
-    chatbotButton.id = 'chatbotWidgetTrigger';
-    chatbotButton.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-        </svg>
-    `;
-    document.body.appendChild(chatbotButton);
+chatbotButton.className = 'cb-widget-button cb-chatbot-button';
+chatbotButton.id = 'chatbotWidgetTrigger';
+chatbotButton.innerHTML = `
+    <img src="https://images.squarespace-cdn.com/content/641c5981823d0207a111bb74/999685ce-589d-4f5f-9763-4e094070fb4b/64e9502e4159bed6f8f57b071db5ac7e+%281%29.gif?content-type=image%2Fgif" alt="Chatbot" style="width: 60px; height: 60px;">
+`;
+document.body.appendChild(chatbotButton);
     
     
       // Create and append elements for WidgetStack and Popup
@@ -212,6 +272,7 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
   chatPopupContainer.className = 'cb-chat-popup-container';
   document.body.appendChild(chatPopupContainer);
 
+let isChatbotOpen = false;
 
     
     function loadScript(src, callback) {
@@ -223,33 +284,45 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
         document.body.appendChild(script);
     }
 
-    function initializeChatbot() {
-        let isChatbotOpen = false;
+function initializeChatbot() {
+    const closeIconHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+            <path fill="currentColor" d="M18.3 5.71a1 1 0 0 0-1.42 0L12 10.59 7.12 5.71a1 1 0 0 0-1.42 1.42L10.59 12l-4.89 4.88a1 1 0 0 0 1.42 1.42L12 13.41l4.88 4.89a1 1 0 0 0 1.42-1.42L13.41 12l4.89-4.88a1 1 0 0 0 0-1.41z"/>
+        </svg>
+    `;
 
-        chatbotButton.addEventListener('click', function() {
-            if (window.botpress) {
-                if (isChatbotOpen) {
-                    if (typeof window.botpress.close === 'function') {
-                        window.botpress.close();
-                        isChatbotOpen = false;
-                        console.log('Chatbot closed');
-                    } else {
-                        console.error('Botpress close function is not available');
-                    }
+    const openIconHTML = `
+        <img src="https://images.squarespace-cdn.com/content/641c5981823d0207a111bb74/999685ce-589d-4f5f-9763-4e094070fb4b/64e9502e4159bed6f8f57b071db5ac7e+%281%29.gif?content-type=image%2Fgif" alt="Chatbot" style="width: 60px; height: 60px;">
+    `;
+
+    chatbotButton.addEventListener('click', function() {
+        if (window.botpress) {
+            if (isChatbotOpen) {
+                if (typeof window.botpress.close === 'function') {
+                    window.botpress.close();
+                    isChatbotOpen = false;
+                    chatbotButton.innerHTML = openIconHTML;
+                    chatbotButton.classList.remove('close-icon'); // Remove close icon class
+                    console.log('Chatbot closed');
                 } else {
-                    if (typeof window.botpress.open === 'function') {
-                        window.botpress.open();
-                        isChatbotOpen = true;
-                        console.log('Chatbot opened');
-                    } else {
-                        console.error('Botpress open function is not available');
-                    }
+                    console.error('Botpress close function is not available');
                 }
             } else {
-                console.error('Botpress is not initialized');
+                if (typeof window.botpress.open === 'function') {
+                    window.botpress.open();
+                    isChatbotOpen = true;
+                    chatbotButton.innerHTML = closeIconHTML;
+                    chatbotButton.classList.add('close-icon'); // Add close icon class
+                    console.log('Chatbot opened');
+                } else {
+                    console.error('Botpress open function is not available');
+                }
             }
-        });
-    }
+        } else {
+            console.error('Botpress is not initialized');
+        }
+    });
+}
 
     loadScript('https://your-gpt.github.io/widget/config.js', () => {
         loadScript(config.injectUrl, () => {
@@ -261,18 +334,54 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
     });
     
       // Script logic
-  let lastScrollTop = 0;
-  let buttonsCollapsed = false;
-  let collapseTimeout;
-  let shownPopups = new Set();
-  let maxScrollReached = 0;
-  let pageLoadTime = Date.now();
-  let firstTwoBubblesShown = false;
+let lastScrollTop = 0;
+let maxScrollReached = 0;
+let buttonsCollapsed = true;
+let shownPopups = new Set();
+let widgetButtons;
 
-    window.addEventListener('scroll', function() {
+function collapseButtons() {
+  buttonsCollapsed = true;
+  // Add your button collapsing logic here
+}
+
+function expandButtons() {
+  buttonsCollapsed = false;
+  // Add your button expanding logic here
+}
+
+function getSecondMessage() {
+  // Your logic to get the second message
+  return "This is the second message!";
+}
+
+function showChatPopup(message, duration, socialIcons = false, id = '') {
+  if (shownPopups.has(id || message)) return;
+  shownPopups.add(id || message);
+
+  // Rest of the function remains the same...
+  const popup = document.createElement('div');
+  popup.innerHTML = message;
+  popup.style.position = 'fixed';
+  popup.style.bottom = '20px';
+  popup.style.right = '20px';
+  popup.style.backgroundColor = 'white';
+  popup.style.padding = '20px';
+  popup.style.border = '1px solid #ccc';
+  popup.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
+  document.body.appendChild(popup);
+
+  setTimeout(() => {
+    document.body.removeChild(popup);
+    shownPopups.delete(id || message);
+  }, duration);
+}
+
+
+window.addEventListener('scroll', function() {
   const windowHeight = window.innerHeight;
   const bodyHeight = document.body.scrollHeight;
-  const scrollTop = window.pageYOffset;
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
   const scrollPercentage = (scrollTop / (bodyHeight - windowHeight)) * 100;
 
   // Add the following lines to initialize widgetButtons if it's not already initialized.
@@ -291,20 +400,26 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
     expandButtons();
   }
 
-  lastScrollTop = scrollTop; // Update lastScrollTop after each scroll event
+  // Check for 50% scroll to show the second popup
+  if (scrollPercentage >= 50 && !shownPopups.has('second')) {
+    showChatPopup(getSecondMessage(), 5000, false, 'second');
+    shownPopups.add('second');
+  }
 
+  maxScrollReached = Math.max(maxScrollReached, scrollTop);
+  lastScrollTop = scrollTop; // Update lastScrollTop after each scroll event
 });
 
 function getCurrentPage() {
   const path = window.location.pathname;
   if (path === '/' || path === '/index.html') {
     return 'home';
-  } else if (path.includes('unterhaltsreinigung')) {
-    return 'unterhaltsreinigung';
-  } else if (path.includes('bueroreinigung')) {
-    return 'bueroreinigung';
-  } else if (path.includes('kitareinigung')) {
-    return 'kitareinigung';
+  } else if (path.includes('unternehmen')) {
+    return 'ueber-uns';
+  } else if (path.includes('immobilienangebote')) {
+    return 'angebot';
+  } else if (path.includes('kontakt')) {
+    return 'kontakt';
   } else {
     return 'other';
   }
@@ -360,18 +475,24 @@ function getCurrentPage() {
 
   function initializeChatPopupListeners() {
     chatPopupContainer.addEventListener('click', function(event) {
-      const popup = event.target.closest('.cb-chat-popup');
-      if (popup) {
-        if (event.target.closest('.social-icons a')) {
-          return;
+        const popup = event.target.closest('.cb-chat-popup');
+        if (popup) {
+            if (event.target.closest('.social-icons a')) {
+                // Social-Icon-Links ignorieren
+                return;
+            }
+            
+            // Botpress öffnen
+            if (window.botpress && typeof window.botpress.open === 'function') {
+                window.botpress.open();
+                isChatbotOpen = true;
+            } else {
+                console.error('Bot ist nicht verfügbar oder die open-Funktion fehlt.');
+            }
         }
-        const dfMessenger = document.querySelector('df-messenger');
-        if (dfMessenger) {
-          dfMessenger.setAttribute('expand', 'true');
-        }
-      }
     });
-  }
+}
+
 
   // Initialize components
   initializeChatPopupListeners();
@@ -385,14 +506,14 @@ function getCurrentPage() {
       case 'home':
         message = '👋 Willkommen! Wie kann ich Ihnen helfen?';
         break;
-      case 'unterhaltsreinigung':
-        message = '🔁 Haben Sie Fragen zur regelmäßigen Reinigung?';
+      case 'ueber-uns':
+        message = '💭 Haben Sie Fragen zu unserem Unternehmen?';
         break;
-      case 'bueroreinigung':
-        message = '💼 Ich kann Ihnen bei Fragen zur Büroreinigung helfen.';
+      case 'angebot':
+        message = '🏠 Suchen Sie etwas Bestimmtes?';
         break;
-      case 'kitareinigung':
-        message = '🏠 Haben Sie Fragen zur Kitareinigung?';
+      case 'kontakt':
+        message = 'Möchten Sie Kontakt aufnehmen?';
         break;
       default:
         message = 'Haben Sie Fragen? Ich bin hier, um zu helfen!';
@@ -406,8 +527,8 @@ function getCurrentPage() {
   switch(currentPage) {
     case 'home':
       return '🔎 Haben Sie gefunden was Sie suchen?';
-    case 'unterhaltsreinigung':
-      return '🔎 Haben Sie gefunden was Sie suchen?';
+    case 'ueber-uns':
+      return '🔎 Möchten Sie etwas über unser Team wissen?';
     case 'bueroreinigung':
       return '🔎 Haben Sie gefunden was Sie suchen?';
     case 'kitareinigung':
