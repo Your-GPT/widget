@@ -90,25 +90,42 @@
       z-index: 999;
     }
 
-    .bpComposerPoweredBy {
-        display: none;
+    const styles = `
+    // ... your existing styles ...
+
+    /* Botpress overrides */
+    div[class*="bpw-powered"] {
+        display: none !important;
     }
 
-    .bpReset bpContainer {
-        z-index: 9999;
-    }
-
-    .bp-widget-container {
+    .bpw-widget-container {
         z-index: 9999 !important;
     }
 
-    .bpHeaderContentActionsIcons {
-        display: none;
+    .bpw-header-container {
+        z-index: 9999 !important;
     }
 
-    .bpHeaderContentDescription {
-        display: none;
+    div[class*="bpw-header-icon"],
+    div[class*="bpw-header-actions"] {
+        display: none !important;
     }
+
+    div[class*="bpw-header-description"] {
+        display: none !important;
+    }
+
+    /* Additional fallbacks */
+    .bp-widget-web {
+        z-index: 9999 !important;
+    }
+
+    [class*="botpress-"] {
+        z-index: 9999 !important;
+    }
+
+    // ... rest of your existing styles ...
+`;
 
     .cb-chat-popup {
       position: relative;
