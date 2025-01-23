@@ -90,6 +90,26 @@
       z-index: 999;
     }
 
+    .bpComposerPoweredBy {
+        display: none;
+    }
+
+    .bpReset bpContainer {
+        z-index: 9999;
+    }
+
+    .bp-widget-container {
+        z-index: 9999 !important;
+    }
+
+    .bpHeaderContentActionsIcons {
+        display: none;
+    }
+
+    .bpHeaderContentDescription {
+        display: none;
+    }
+
     .cb-chat-popup {
       position: relative;
       background-color: #f2f2f2;
@@ -348,7 +368,6 @@ loadScript('https://your-gpt.github.io/widget/config.js', () => {
             "themeMode": "light",
             "fontFamily": "inter",
             "radius": 2,
-            "additionalStylesheetUrl": "https://files.bpcontent.cloud/2025/01/23/16/20250123162039-KFDUAY5D.css"
         },
         "clientId": "a2eab3d0-a1d2-44ee-9956-c5a4560b0326"
     });
