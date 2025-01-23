@@ -365,10 +365,10 @@ loadScript('https://your-gpt.github.io/widget/config.js', () => {
     });
 
     widget.init({
-        "botId": "0886bb71-0490-48c4-9016-d40c87a88d4f",
+        "botId": "5e6fc2fe-df51-455a-9b27-12b1e7245473",
         "configuration": {
             "composerPlaceholder": "Schreiben Sie eine Nachricht...",
-            "botName": "TrustedGPT",
+            "botName": "GreenAntsGPT",
             "botAvatar": "https://files.bpcontent.cloud/2025/01/23/16/20250123162650-0FOJJJLE.gif",
             "botDescription": "Unsere KI beantwortet Ihre Fragen",
             "website": {},
@@ -376,14 +376,14 @@ loadScript('https://your-gpt.github.io/widget/config.js', () => {
             "phone": {},
             "termsOfService": {},
             "privacyPolicy": {},
-            "color": "#35424A",
+            "color": "#9BC51B",
             "variant": "solid",
             "themeMode": "light",
             "fontFamily": "inter",
             "radius": 2,
             "hideWidget": true, // Add this to ensure it starts hidden
         },
-        "clientId": "a2eab3d0-a1d2-44ee-9956-c5a4560b0326"
+        "clientId": "e533af57-998e-439a-8e4b-31b420b9f361"
     });
 });
     
