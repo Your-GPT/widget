@@ -348,7 +348,7 @@ loadScript('https://your-gpt.github.io/widget/config.js', () => {
     const { widget } = config; // Destructure to get the widget reference
     
     widget.on("webchat:ready", (conversationId) => {
-        initializeChatbot();
+        initializeChatbot(); // Just initialize, don't open
     });
 
     widget.init({
@@ -368,6 +368,7 @@ loadScript('https://your-gpt.github.io/widget/config.js', () => {
             "themeMode": "light",
             "fontFamily": "inter",
             "radius": 2,
+            "hideWidget": true, // Add this to ensure it starts hidden
         },
         "clientId": "a2eab3d0-a1d2-44ee-9956-c5a4560b0326"
     });
