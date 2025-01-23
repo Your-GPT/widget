@@ -329,7 +329,6 @@ loadScript('https://your-gpt.github.io/widget/config.js', () => {
     
     widget.on("webchat:ready", (conversationId) => {
         initializeChatbot();
-        widget.open();
     });
 
     widget.init({
