@@ -90,10 +90,7 @@
       z-index: 999;
     }
 
-    const styles = `
-    // ... your existing styles ...
 
-    /* Botpress overrides */
     div[class*="bpw-powered"] {
         display: none !important;
     }
@@ -124,8 +121,7 @@
         z-index: 9999 !important;
     }
 
-    // ... rest of your existing styles ...
-`;
+
 
     .cb-chat-popup {
       position: relative;
