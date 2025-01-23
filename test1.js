@@ -325,13 +325,14 @@ function initializeChatbot() {
 }
 
 loadScript('https://your-gpt.github.io/widget/config.js', () => {
-    // Direct Botpress initialization after config loads
-    window.botpress.on("webchat:ready", (conversationId) => {
-        initializeChatbot(); // Keep your custom UI initialization
-        botpress.open();
+    const { widget } = config; // Destructure to get the widget reference
+    
+    widget.on("webchat:ready", (conversationId) => {
+        initializeChatbot();
+        widget.open();
     });
 
-    window.botpress.init({
+    widget.init({
         "botId": "0886bb71-0490-48c4-9016-d40c87a88d4f",
         "configuration": {
             "composerPlaceholder": "Schreiben Sie eine Nachricht...",
