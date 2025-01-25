@@ -327,8 +327,8 @@ function initializeChatbot() {
 loadScript('https://your-gpt.github.io/widget/config.js', () => {
     loadScript(config.injectUrl, () => {
         window.botpress.init({
-            "botId": "a980b88f-da82-488b-ae97-f6deade5b3ac",
-            "clientId": "4fe90f6a-7fae-48d8-91e5-4a360bb34cf5",
+            "botId": "b51e5ae2-4434-4724-874d-77dab64917cf",
+            "clientId": "8d257eb3-c88f-4fc3-a957-5fdb0a2ab140",
             "configuration": {
                 "composerPlaceholder": "Schreiben Sie eine Nachricht...",
                 "botName": "jenID GPT",
