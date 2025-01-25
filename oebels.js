@@ -1,4 +1,4 @@
- (function() {
+        (function() {
     
     const styles = `
 
@@ -324,14 +324,45 @@ function initializeChatbot() {
     });
 }
 
-    loadScript('https://your-gpt.github.io/widget/config.js', () => {
-        loadScript(config.injectUrl, () => {
-            loadScript('https://files.bpcontent.cloud/2025/01/20/15/20250120150053-LFRBCOA6.js', () => {
-                // Initialize the chatbot after all scripts are loaded
-                initializeChatbot();
-            });
+loadScript('https://your-gpt.github.io/widget/config.js', () => {
+    loadScript(config.injectUrl, () => {
+        window.botpress.init({
+            "botId": "d42c3521-4b5d-4e25-bf53-e9dd4eb37958",
+            "configuration": {
+                "composerPlaceholder": "Schreiben Sie eine Nachricht...",
+                "botName": "OebelsGPT",
+                "botAvatar": "https://files.bpcontent.cloud/2025/01/20/15/20250120150034-H4MSRURH.gif",
+                "botDescription": "Unsere KI beantwortet Ihre Fragen",
+                "website": {},
+                "email": {},
+                "phone": {},
+                "termsOfService": {},
+                "privacyPolicy": {},
+                "color": "#0287C4",
+                "variant": "solid",
+                "themeMode": "light",
+                "fontFamily": "inter",
+                "radius": 2,
+                "additionalStylesheet": `
+                    .bpComposerPoweredBy {
+                        display: none;
+                    }
+                    .bpReset bpContainer {
+                        z-index: 9999;
+                    }
+                    .bp-widget-container {
+                        z-index: 9999 !important;
+                    }
+                    .bpHeaderContentDescription {
+                        display: none;
+                    }
+                `
+            },
+            "clientId": "3fef9e3b-5bf4-4565-a355-7c3819567bd2"
         });
+        initializeChatbot();
     });
+});
     
       // Script logic
 let lastScrollTop = 0;
