@@ -327,8 +327,8 @@ function initializeChatbot() {
 loadScript('https://your-gpt.github.io/widget/config.js', () => {
     loadScript(config.injectUrl, () => {
         window.botpress.init({
-            "botId": "a980b88f-da82-488b-ae97-f6deade5b3ac",
-            "clientId": "4fe90f6a-7fae-48d8-91e5-4a360bb34cf5",
+            "botId": "b9498de3-e63f-42fb-9f2a-d7f623dc9869",
+            "clientId": "bfd47cd7-4ab0-4ac6-94d3-07f4467927d8",
             "configuration": {
                 "composerPlaceholder": "Schreiben Sie eine Nachricht...",
                 "botName": "ImstamGPT",
