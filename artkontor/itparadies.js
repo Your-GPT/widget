@@ -1,4 +1,4 @@
- (function() {
+        (function() {
     
     const styles = `
 
@@ -324,14 +324,45 @@ function initializeChatbot() {
     });
 }
 
-    loadScript('https://your-gpt.github.io/widget/config.js', () => {
-        loadScript(config.injectUrl, () => {
-            loadScript('https://files.bpcontent.cloud/2024/11/28/11/20241128112144-8VQYCWP2.js', () => {
-                // Initialize the chatbot after all scripts are loaded
-                initializeChatbot();
-            });
+loadScript('https://your-gpt.github.io/widget/config.js', () => {
+    loadScript(config.injectUrl, () => {
+        window.botpress.init({
+            "botId": "9a796688-9389-4c8b-b948-8b3915cabb19",
+            "clientId": "e5ea9f5d-82a5-4bf5-8e7c-f46e077b4b0e",
+            "configuration": {
+                "composerPlaceholder": "Schreiben Sie eine Nachricht...",
+                "botName": "ParadiesGPT",
+                "botAvatar": "https://files.bpcontent.cloud/2025/01/20/15/20250120150034-H4MSRURH.gif",
+                "botDescription": "Unsere KI beantwortet Ihre Fragen",
+                "website": {},
+                "email": {},
+                "phone": {},
+                "termsOfService": {},
+                "privacyPolicy": {},
+                "color": "#95C11E",
+                "variant": "solid",
+                "themeMode": "light",
+                "fontFamily": "inter",
+                "radius": 2,
+                "additionalStylesheet": `
+                    .bpComposerPoweredBy {
+                        display: none;
+                    }
+                    .bpReset bpContainer {
+                        z-index: 9999;
+                    }
+                    .bp-widget-container {
+                        z-index: 9999 !important;
+                    }
+                    .bpHeaderContentDescription {
+                        display: none;
+                    }
+                `
+            }
         });
+        initializeChatbot();
     });
+});
     
       // Script logic
 let lastScrollTop = 0;
