@@ -327,8 +327,8 @@ function initializeChatbot() {
 loadScript('https://your-gpt.github.io/widget/config.js', () => {
     loadScript(config.injectUrl, () => {
         window.botpress.init({
-            "botId": "",
-            "clientId": "",
+            "botId": "5be55c7e-1b1a-4c19-a775-15a9c8659585",
+            "clientId": "1e193c34-b254-47bb-b6f0-641966484e6e",
             "configuration": {
                 "composerPlaceholder": "Schreiben Sie eine Nachricht...",
                 "botName": "Schwarzer Bär GPT",
