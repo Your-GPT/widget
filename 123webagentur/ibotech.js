@@ -320,11 +320,11 @@ function loadBotScripts() {
     loadScript('https://your-gpt.github.io/widget/config.js', () => {
         loadScript(config.injectUrl, () => {
             window.botpress.init({
-                "botId": "f3ffe8d9-d804-465a-8149-3df7d0d0b4cc",
-                "clientId": "d41ac572-a65e-4331-8cc4-993a3aa89481",
+                "botId": "bfa1ecc7-756c-4987-9e1b-141f03071764",
+                "clientId": "3f12e265-1f11-4f38-85d8-6fd68e5e5175",
                 "configuration": {
                     "composerPlaceholder": "Schreiben Sie eine Nachricht...",
-                    "botName": "TowerGPT",
+                    "botName": "IbotechGPT",
                     "botAvatar": "https://files.bpcontent.cloud/2025/01/20/15/20250120150034-H4MSRURH.gif",
                     "botDescription": "Unsere KI beantwortet Ihre Fragen",
                     "website": {},
@@ -332,7 +332,7 @@ function loadBotScripts() {
                     "phone": {},
                     "termsOfService": {},
                     "privacyPolicy": {},
-                    "color": "#CF111B",
+                    "color": "#9C0E11",
                     "variant": "solid",
                     "themeMode": "light",
                     "fontFamily": "inter",
