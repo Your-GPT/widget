@@ -1,4 +1,4 @@
-(function() {
+ (function() {
     const styles = `
     :root {
       --widget-icon-color: #f2f2f2;
@@ -302,9 +302,7 @@ function revokeConsent() {
 const savedConsent = getCookie('chatbot_consent');
 if (savedConsent === 'true') {
     hasConsented = true;
-    loadBotScripts(); // Automatically load bot if consent exists
-} else {
-    privacyConsent.classList.add('show');
+    loadBotScripts(); // Just load scripts, don't open bot
 }
 
   function loadScript(src, callback) {
@@ -356,11 +354,10 @@ function loadBotScripts() {
                 }
             });
             botScriptsLoaded = true;
-            window.botpress.open();
-            isChatbotOpen = true;
+            // Removed window.botpress.open() and isChatbotOpen = true
         });
     });
-}   
+}  
 
 document.querySelector('.privacy-consent-accept').addEventListener('click', function() {
     hasConsented = true;
@@ -376,7 +373,15 @@ document.querySelector('.privacy-consent-decline').addEventListener('click', fun
 
 chatbotButton.addEventListener('click', function() {
     if (!hasConsented) {
-        privacyConsent.classList.add('show');
+        const savedConsent = getCookie('chatbot_consent');
+        if (savedConsent === 'true') {
+            hasConsented = true;
+            if (!botScriptsLoaded) {
+                loadBotScripts();
+            }
+        } else {
+            privacyConsent.classList.add('show');
+        }
         return;
     }
 
@@ -424,22 +429,30 @@ function showChatPopup(message, duration, socialIcons = false) {
     popup.innerHTML = message;
 
     // Add click handler directly to the popup
-    popup.addEventListener('click', function() {
-        if (!hasConsented) {
+popup.addEventListener('click', function() {
+    if (!hasConsented) {
+        const savedConsent = getCookie('chatbot_consent');
+        if (savedConsent === 'true') {
+            hasConsented = true;
+            if (!botScriptsLoaded) {
+                loadBotScripts();
+            }
+        } else {
             privacyConsent.classList.add('show');
-            return;
         }
+        return;
+    }
 
-        if (!botScriptsLoaded) {
-            loadBotScripts();
-            return;
-        }
+    if (!botScriptsLoaded) {
+        loadBotScripts();
+        return;
+    }
 
-        if (window.botpress && typeof window.botpress.open === 'function') {
-            window.botpress.open();
-            isChatbotOpen = true;
-        }
-    });
+    if (window.botpress && typeof window.botpress.open === 'function') {
+        window.botpress.open();
+        isChatbotOpen = true;
+    }
+});
 
     chatPopupContainer.insertBefore(popup, chatPopupContainer.firstChild);
 
