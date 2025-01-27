@@ -327,8 +327,8 @@ function initializeChatbot() {
 loadScript('https://your-gpt.github.io/widget/config.js', () => {
     loadScript(config.injectUrl, () => {
         window.botpress.init({
-            "botId": "a980b88f-da82-488b-ae97-f6deade5b3ac",
-            "clientId": "4fe90f6a-7fae-48d8-91e5-4a360bb34cf5",
+            "botId": "fbeaaef4-6008-4d2d-aeb5-df010c16f63b",
+            "clientId": "3e9801d4-74e6-41e5-bc36-8dbbf492ab5b",
             "configuration": {
                 "composerPlaceholder": "Schreiben Sie eine Nachricht...",
                 "botName": "BiehlerGPT",
