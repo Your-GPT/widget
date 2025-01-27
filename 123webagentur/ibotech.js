@@ -332,6 +332,52 @@ function loadBotScripts() {
 }
 
 
+function setCookie(name, value, days) {
+    const expires = new Date();
+    expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+    document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;Secure;SameSite=Strict`;
+}
+
+function getCookie(name) {
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(';');
+    for(let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+// Initialize consent check
+let hasConsented = false;
+let botScriptsLoaded = false;
+
+// Check for existing consent when page loads
+const savedConsent = getCookie('chatbot_consent');
+if (savedConsent === 'true') {
+    hasConsented = true;
+    loadBotScripts(); // Automatically load bot if consent exists
+} else {
+    // Show privacy consent only if no consent cookie exists
+    privacyConsent.classList.add('show');
+}
+
+// Consent handlers
+document.querySelector('.privacy-consent-accept').addEventListener('click', function() {
+    hasConsented = true;
+    setCookie('chatbot_consent', 'true', 365); // Store consent for 1 year
+    privacyConsent.classList.remove('show');
+    loadBotScripts();
+});
+
+// Optional: Function to revoke consent
+function revokeConsent() {
+    setCookie('chatbot_consent', '', -1); // Expire the cookie
+    hasConsented = false;
+    location.reload(); // Reload page to reset bot state
+}
+    
 
 document.querySelector('.privacy-consent-accept').addEventListener('click', function() {
     hasConsented = true;
