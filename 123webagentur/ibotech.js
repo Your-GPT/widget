@@ -363,7 +363,54 @@ document.querySelector('.privacy-consent-accept').addEventListener('click', func
     hasConsented = true;
     setCookie('chatbot_consent', 'true', 365); // Store consent for 1 year
     privacyConsent.classList.remove('show');
-    loadBotScripts();
+    
+    // Modified loadBotScripts call for first interaction
+    if (!botScriptsLoaded) {
+        loadScript('https://your-gpt.github.io/widget/config.js', () => {
+            loadScript(config.injectUrl, () => {
+                window.botpress.init({
+                    "botId": "f3ffe8d9-d804-465a-8149-3df7d0d0b4cc",
+                    "clientId": "d41ac572-a65e-4331-8cc4-993a3aa89481",
+                    "configuration": {
+                        "composerPlaceholder": "Schreiben Sie eine Nachricht...",
+                        "botName": "TowerGPT",
+                        "botAvatar": "https://files.bpcontent.cloud/2025/01/20/15/20250120150034-H4MSRURH.gif",
+                        "botDescription": "Unsere KI beantwortet Ihre Fragen",
+                        "website": {},
+                        "email": {},
+                        "phone": {},
+                        "termsOfService": {},
+                        "privacyPolicy": {},
+                        "color": "#CF111B",
+                        "variant": "solid",
+                        "themeMode": "light",
+                        "fontFamily": "inter",
+                        "radius": 2,
+                        "additionalStylesheet": `
+                            .bpComposerPoweredBy {
+                                display: none;
+                            }
+                            .bpReset bpContainer {
+                                z-index: 9999;
+                            }
+                            .bp-widget-container {
+                                z-index: 9999 !important;
+                            }
+                            .bpHeaderContentDescription {
+                                display: none;
+                            }
+                        `
+                    }
+                });
+                botScriptsLoaded = true;
+                // Open the bot after initialization
+                setTimeout(() => {
+                    window.botpress.open();
+                    isChatbotOpen = true;
+                }, 100); // Small delay to ensure everything is ready
+            });
+        });
+    }
 });
 
 document.querySelector('.privacy-consent-decline').addEventListener('click', function() {
