@@ -65,31 +65,6 @@
       color: black;
     }
 
-   .cb-widget-button.close-icon:hover {
-    background-color: #ff4444 !important;
-}
-
-.cb-widget-button.close-icon {
-    background-color: #e63939 !important;
-}
-
-.cb-widget-button.close-icon svg {
-    color: white;
-    width: 28px;
-    height: 28px;
-}
-
-.cb-widget-buttons {
-  position: fixed;
-  bottom: 76px;
-  right: 20px;
-  display: flex;
-  flex-direction: column-reverse;
-  gap: 10px;
-  z-index: 998;
-  transition: transform 0.5s ease, opacity 0.5s ease;
-}
-
     .cb-widget-button {
       background-color: var(--widget-button-color);
       color: var(--widget-icon-color);
@@ -118,15 +93,6 @@
     .cb-widget-button:hover {
       background-color: var(--widget-button-hover-color);
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    }
-
-    .cb-widget-buttons.collapsed {
-      transform: translateY(70px);
-      opacity: 0;
-    }
-
-    .cb-widget-buttons.collapsed .cb-widget-button {
-      transform: scale(0);
     }
 
     .cb-button-stack-area {
@@ -207,43 +173,6 @@
       transform: translateY(10px);
     }
 
-    .social-icons {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 5px;
-    }
-
-    .social-icons a {
-      color: var(--widget-button-color);
-      font-size: 18px;
-      transition: color 0.3s ease, filter 0.3s ease;
-    }
-
-    .social-icons a:hover {
-      color: var(--widget-button-hover-color);
-      filter: brightness(1.5);
-    }
-
-    .social-icons svg {
-      width: 18px;
-      height: 18px;
-      fill: currentColor;
-    }
-    
-    .flip-vertical {
-      transform: scaleX(-1);
-    }
-    
-    .cb-widget-buttons {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 10px;
-    }
-
     .cb-chatbot-button {
       position: fixed;
       bottom: 84px;
@@ -267,10 +196,17 @@
       transition: filter 0.5s ease;
     }
 
-    .cb-widget-buttons {
-      gap: 6px;
-      bottom: 73px;
-    }
+.cb-widget-buttons {
+    position: fixed;
+    bottom: 73px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    z-index: 998;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
       
     .bpFab {
       display: none;
@@ -349,73 +285,53 @@
       document.body.appendChild(script);
   }
 
-  function loadScript(src, callback) {
-    const script = document.createElement('script');
-    script.src = src;
-    script.async = true;
-    script.onload = () => callback && callback();
-    script.onerror = () => console.error(`Failed to load script: ${src}`);
-    document.body.appendChild(script);
-}
-
 function loadBotScripts() {
     if (botScriptsLoaded) return;
     
     loadScript('https://your-gpt.github.io/widget/config.js', () => {
         loadScript(config.injectUrl, () => {
-            loadScript('https://files.bpcontent.cloud/2025/01/15/16/20250115163418-SZYR8Q3L.js', () => {
-                botScriptsLoaded = true;
-                initializeChatbot();
-                window.botpress.open();
-                isChatbotOpen = true;
-                updateChatbotButton();
+            window.botpress.init({
+                "botId": "f3ffe8d9-d804-465a-8149-3df7d0d0b4cc",
+                "clientId": "d41ac572-a65e-4331-8cc4-993a3aa89481",
+                "configuration": {
+                    "composerPlaceholder": "Schreiben Sie eine Nachricht...",
+                    "botName": "TowerGPT",
+                    "botAvatar": "https://files.bpcontent.cloud/2025/01/20/15/20250120150034-H4MSRURH.gif",
+                    "botDescription": "Unsere KI beantwortet Ihre Fragen",
+                    "website": {},
+                    "email": {},
+                    "phone": {},
+                    "termsOfService": {},
+                    "privacyPolicy": {},
+                    "color": "#CF111B",
+                    "variant": "solid",
+                    "themeMode": "light",
+                    "fontFamily": "inter",
+                    "radius": 2,
+                    "additionalStylesheet": `
+                        .bpComposerPoweredBy {
+                            display: none;
+                        }
+                        .bpReset bpContainer {
+                            z-index: 9999;
+                        }
+                        .bp-widget-container {
+                            z-index: 9999 !important;
+                        }
+                        .bpHeaderContentDescription {
+                            display: none;
+                        }
+                    `
+                }
             });
+            botScriptsLoaded = true;
+            window.botpress.open();
+            isChatbotOpen = true;
         });
     });
 }
 
-  function updateChatbotButton() {
-      const closeIconHTML = `
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-              <path fill="currentColor" d="M18.3 5.71a1 1 0 0 0-1.42 0L12 10.59 7.12 5.71a1 1 0 0 0-1.42 1.42L10.59 12l-4.89 4.88a1 1 0 0 0 1.42 1.42L12 13.41l4.88 4.89a1 1 0 0 0 1.42-1.42L13.41 12l4.89-4.88a1 1 0 0 0 0-1.41z"/>
-          </svg>
-      `;
 
-      const openIconHTML = `
-          <img src="https://images.squarespace-cdn.com/content/641c5981823d0207a111bb74/999685ce-589d-4f5f-9763-4e094070fb4b/64e9502e4159bed6f8f57b071db5ac7e+%281%29.gif?content-type=image%2Fgif" alt="Chatbot" style="width: 60px; height: 60px;">
-      `;
-
-      chatbotButton.innerHTML = isChatbotOpen ? closeIconHTML : openIconHTML;
-      chatbotButton.classList.toggle('close-icon', isChatbotOpen);
-  }
-
-
-
-
-function initializeChatbot() {
-    chatbotButton.addEventListener('click', function() {
-        if (!hasConsented) {
-            privacyConsent.classList.add('show');
-            return;
-        }
-
-        if (!botScriptsLoaded) {
-            loadBotScripts();
-            return;
-        }
-
-        if (window.botpress) {
-            if (isChatbotOpen) {
-                window.botpress.close();
-                isChatbotOpen = false;
-            } else {
-                window.botpress.open();
-                isChatbotOpen = true;
-            }
-            updateChatbotButton();
-        }
-    });
-}
 
 document.querySelector('.privacy-consent-accept').addEventListener('click', function() {
     hasConsented = true;
@@ -437,115 +353,38 @@ chatbotButton.addEventListener('click', function() {
         loadBotScripts();
         return;
     }
+
+    if (window.botpress) {
+        if (isChatbotOpen) {
+            window.botpress.close();
+            isChatbotOpen = false;
+        } else {
+            window.botpress.open();
+            isChatbotOpen = true;
+        }
+    }
 });
 
-  document.querySelector('.privacy-consent-accept').addEventListener('click', function() {
-      hasConsented = true;
-      privacyConsent.classList.remove('show');
-      loadBotScripts();
-  });
-
-  document.querySelector('.privacy-consent-decline').addEventListener('click', function() {
-      privacyConsent.classList.remove('show');
-  });
-
-  chatbotButton.addEventListener('click', function() {
-      if (!hasConsented) {
-          privacyConsent.classList.add('show');
-          return;
-      }
-
-      if (!botScriptsLoaded) {
-          loadBotScripts();
-          return;
-      }
-  });
-
-  let lastScrollTop = 0;
-  let maxScrollReached = 0;
-  let buttonsCollapsed = true;
   let shownPopups = new Set();
-  let widgetButtons;
 
-  function collapseButtons() {
-    buttonsCollapsed = true;
-  }
 
-  function expandButtons() {
-    buttonsCollapsed = false;
-  }
+window.addEventListener('scroll', function() {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    let scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    let scrollPercentage = (scrollTop / scrollHeight) * 100;
 
-  function getSecondMessage() {
-    return "This is the second message!";
-  }
-
-  function showChatPopup(message, duration, socialIcons = false, id = '') {
-    if (shownPopups.has(id || message)) return;
-    shownPopups.add(id || message);
-
-    const popup = document.createElement('div');
-    popup.innerHTML = message;
-    popup.style.position = 'fixed';
-    popup.style.bottom = '20px';
-    popup.style.right = '20px';
-    popup.style.backgroundColor = 'white';
-    popup.style.padding = '20px';
-    popup.style.border = '1px solid #ccc';
-    popup.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
-    document.body.appendChild(popup);
-
-    setTimeout(() => {
-      document.body.removeChild(popup);
-      shownPopups.delete(id || message);
-    }, duration);
-  }
-
-  window.addEventListener('scroll', function() {
-    const windowHeight = window.innerHeight;
-    const bodyHeight = document.body.scrollHeight;
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const scrollPercentage = (scrollTop / (bodyHeight - windowHeight)) * 100;
-
-    if (!widgetButtons) {
-      widgetButtons = document.getElementById('widgetButtons');
-      if (!widgetButtons) {
-        console.error("widgetButtons element not found!");
-      }
-    }
-
-    if (scrollPercentage >= 90 && buttonsCollapsed) {
-      expandButtons();
-    } else if (scrollTop > lastScrollTop && !buttonsCollapsed && scrollPercentage < 90) {
-      collapseButtons();
-    } else if ((scrollTop < lastScrollTop || scrollPercentage >= 90) && buttonsCollapsed) {
-      expandButtons();
-    }
-
+    // Second message at 50% scroll
     if (scrollPercentage >= 50 && !shownPopups.has('second')) {
-      showChatPopup(getSecondMessage(), 5000, false, 'second');
-      shownPopups.add('second');
+        showChatPopup(getSecondMessage(), 5000, false, 'second');
     }
 
-    maxScrollReached = Math.max(maxScrollReached, scrollTop);
-    lastScrollTop = scrollTop;
-  });
-
-  function getCurrentPage() {
-    const path = window.location.pathname;
-    if (path === '/' || path === '/index.html') {
-      return 'home';
-    } else if (path.includes('unternehmen')) {
-      return 'ueber-uns';
-    } else if (path.includes('immobilienangebote')) {
-      return 'angebot';
-    } else if (path.includes('kontakt')) {
-      return 'kontakt';
-    } else {
-      return 'other';
+    // Contact message at 90% scroll
+    if (scrollPercentage > 90 && !shownPopups.has('Nehmen Sie gerne Kontakt zu uns auf!')) {
+        showChatPopup('Nehmen Sie gerne Kontakt zu uns auf!', 7000);
     }
-  }
+});
 
-  function showChatPopup(message, duration, socialIcons = false) {
+function showChatPopup(message, duration, socialIcons = false) {
     if (shownPopups.has(message)) return;
     shownPopups.add(message);
 
@@ -553,128 +392,116 @@ chatbotButton.addEventListener('click', function() {
     popup.className = 'cb-chat-popup';
     popup.innerHTML = message;
 
+    // Add click handler directly to the popup
+    popup.addEventListener('click', function() {
+        if (!hasConsented) {
+            privacyConsent.classList.add('show');
+            return;
+        }
+
+        if (!botScriptsLoaded) {
+            loadBotScripts();
+            return;
+        }
+
+        if (window.botpress && typeof window.botpress.open === 'function') {
+            window.botpress.open();
+            isChatbotOpen = true;
+        }
+    });
+
     chatPopupContainer.insertBefore(popup, chatPopupContainer.firstChild);
 
     const existingPopups = chatPopupContainer.querySelectorAll('.cb-chat-popup');
     existingPopups.forEach((existingPopup, index) => {
-      if (index > 0) {
-        existingPopup.style.transform = `translateY(-${index * 100}%)`;
-      }
+        if (index > 0) {
+            existingPopup.style.transform = `translateY(-${index * 100}%)`;
+        }
     });
 
     setTimeout(() => {
-      popup.classList.add('show');
+        popup.classList.add('show');
     }, 100);
 
     setTimeout(() => {
-      popup.classList.remove('show');
-      popup.classList.add('hide');
-      setTimeout(() => {
-        chatPopupContainer.removeChild(popup);
-        const remainingPopups = chatPopupContainer.querySelectorAll('.cb-chat-popup');
-        remainingPopups.forEach((remainingPopup, index) => {
-          remainingPopup.style.transform = `translateY(-${index * 100}%)`;
-        });
-      }, 300);
+        popup.classList.remove('show');
+        popup.classList.add('hide');
+        setTimeout(() => {
+            chatPopupContainer.removeChild(popup);
+            const remainingPopups = chatPopupContainer.querySelectorAll('.cb-chat-popup');
+            remainingPopups.forEach((remainingPopup, index) => {
+                remainingPopup.style.transform = `translateY(-${index * 100}%)`;
+            });
+        }, 300);
     }, duration);
+}
 
-    if (shownPopups.size === 2) {
-      firstTwoBubblesShown = true;
-      checkForFourthBubble();
-    }
-  }
 
-  function checkForFourthBubble() {
-    if (firstTwoBubblesShown && Date.now() - pageLoadTime > 30000 && !shownPopups.has('Kann ich zu einer speziellen Frage behilflich sein?')) {
-      showChatPopup('Kann ich zu einer speziellen Frage behilflich sein?', 5000);
-    }
-  }
+// Basic version - Standard welcome message
+function isHomePage() {
+    const path = window.location.pathname;
+    return path === '/' || path === '/index.html';
+}
 
-  function initializeChatPopupListeners() {
-    chatPopupContainer.addEventListener('click', function(event) {
-      const popup = event.target.closest('.cb-chat-popup');
-      if (popup) {
-        if (event.target.closest('.social-icons a')) {
-          return;
-        }
-        
-        if (window.botpress && typeof window.botpress.open === 'function') {
-          window.botpress.open();
-          isChatbotOpen = true;
-        } else {
-          console.error('Bot ist nicht verfügbar oder die open-Funktion fehlt.');
-        }
-      }
-    });
-  }
-
-  initializeChatPopupListeners();
-
-  setTimeout(function() {
-    const currentPage = getCurrentPage();
-    let message = '';
-
-    switch(currentPage) {
-      case 'home':
-        message = '👋 Willkommen! Wie kann ich Ihnen helfen?';
-        break;
-      case 'ueber-uns':
-        message = '💭 Haben Sie Fragen zu unserem Unternehmen?';
-        break;
-      case 'angebot':
-        message = '🏠 Suchen Sie etwas Bestimmtes?';
-        break;
-      case 'kontakt':
-        message = 'Möchten Sie Kontakt aufnehmen?';
-        break;
-      default:
-        message = 'Haben Sie Fragen? Ich bin hier, um zu helfen!';
-    }
-
+setTimeout(function() {
+    const message = isHomePage()
+        ? '👋 Willkommen! Wie kann ich Ihnen helfen?'
+        : '💭 Haben Sie Fragen? Ich bin hier, um zu helfen!';
     showChatPopup(message, 5000);
-  }, 1500);
+}, 1500);
 
-  function getSecondMessage() {
-    const currentPage = getCurrentPage();
-    switch(currentPage) {
-      case 'home':
-        return '🔎 Haben Sie gefunden was Sie suchen?';
-      case 'ueber-uns':
-        return '🔎 Möchten Sie etwas über unser Team wissen?';
-      case 'bueroreinigung':
-        return '🔎 Haben Sie gefunden was Sie suchen?';
-      case 'kitareinigung':
-        return '🔎 Haben Sie gefunden was Sie suchen?';
-      default:
-        return 'Kann ich Ihnen bei etwas Bestimmtem helfen?';
+function getSecondMessage() {
+    return isHomePage()
+        ? '🔎 Haben Sie gefunden was Sie suchen?'
+        : 'Kann ich Ihnen bei etwas Bestimmtem helfen?';
+}
+
+/* PREMIUM FEATURE: Page-specific messages
+// Configuration object for page-specific settings
+const pageConfig = {
+    // URL pattern to page name mapping
+    urlPatterns: {
+        '^/$|/index.html$': 'home',
+        'unternehmen': 'about',
+        'immobilienangebote': 'offers',
+        'kontakt': 'contact',
+        // Easy to add new pages:
+        // 'your-url-pattern': 'page-key',
+    },
+
+    // Messages for each page and type
+    messages: {
+        welcome: {
+            home: '👋 Willkommen! Wie kann ich Ihnen helfen?',
+            about: '💭 Haben Sie Fragen zu unserem Unternehmen?',
+            offers: '🏠 Suchen Sie etwas Bestimmtes?',
+            contact: 'Möchten Sie Kontakt aufnehmen?',
+            default: 'Haben Sie Fragen? Ich bin hier, um zu helfen!'
+        },
+        second: {
+            home: '🔎 Haben Sie gefunden was Sie suchen?',
+            about: '🔎 Möchten Sie etwas über unser Team wissen?',
+            offers: '🔎 Haben Sie gefunden was Sie suchen?',
+            contact: '🔎 Haben Sie weitere Fragen?',
+            default: 'Kann ich Ihnen bei etwas Bestimmtem helfen?'
+        }
     }
-  }
+};
 
-  window.addEventListener('scroll', function() {
-    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    let scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    let scrollPercentage = (scrollTop / scrollHeight) * 100;
-
-    maxScrollReached = Math.max(maxScrollReached, scrollTop);
-
-    if (scrollTop > lastScrollTop && !buttonsCollapsed) {
-      collapseButtons();
-    } else if (scrollTop < lastScrollTop && buttonsCollapsed) {
-      expandButtons();
+function getCurrentPage() {
+    const path = window.location.pathname;
+    for (const [pattern, pageName] of Object.entries(pageConfig.urlPatterns)) {
+        if (path.match(new RegExp(pattern))) {
+            return pageName;
+        }
     }
-    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    return 'default';
+}
 
-    if (maxScrollReached > 1300 && !shownPopups.has('second')) {
-      showChatPopup(getSecondMessage(), 5000, false, 'second');
-    }
+function getMessage(type, page) {
+    return pageConfig.messages[type]?.[page] || pageConfig.messages[type].default;
+}
+END PREMIUM FEATURE */
 
-    if (scrollPercentage > 90 && !shownPopups.has('Nehmen Sie gerne Kontakt zu uns auf!')) {
-      showChatPopup('Nehmen Sie gerne Kontakt zu uns auf!', 7000, true);
-    }
 
-    checkForFourthBubble();
-  });
-
-  setInterval(checkForFourthBubble, 1000);
-    
 })();
