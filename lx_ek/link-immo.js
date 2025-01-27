@@ -1,24 +1,12 @@
- (function() {
+(function() {
     
     const styles = `
 
     :root {
+      --widget-button-color: #BFA35C;
       --widget-icon-color: #f2f2f2;
+      --widget-button-hover-color: #937f4c;
     }
-
-   .cb-widget-button.close-icon:hover {
-    background-color: #ff4444 !important;
-}
-
-.cb-widget-button.close-icon {
-    background-color: #e63939 !important;
-}
-
-.cb-widget-button.close-icon svg {
-    color: white; /* White icon */
-    width: 28px; /* Slightly larger icon */
-    height: 28px;
-}
 
 .cb-widget-buttons {
   position: fixed;
@@ -195,7 +183,6 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
   overflow: hidden; /* Ensure content stays within bounds */
 }
 
-
 .cb-chatbot-button img {
   width: 100%; /* Fill entire button width */
   height: 100%; /* Fill entire button height */
@@ -219,6 +206,35 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
         display: none;
       }
 
+      @media (max-width: 768px) {
+      .cb-widget-buttons {
+        left: 20px;
+        right: auto;
+      }
+
+      .cb-chatbot-button {
+        left: 16px;
+        right: auto;
+      }
+
+      .cb-chat-popup-container {
+        left: 72px;
+        right: auto;
+        align-items: flex-start;
+      }
+
+      .cb-chat-popup {
+        border-radius: 20px 20px 20px 0;
+      }
+
+      .cb-chat-popup::after {
+        left: 20px;
+        right: auto;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+      }
+    }
+
   `;
 
   // Create style element
@@ -232,7 +248,7 @@ border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
 chatbotButton.className = 'cb-widget-button cb-chatbot-button';
 chatbotButton.id = 'chatbotWidgetTrigger';
 chatbotButton.innerHTML = `
-    <img src="https://images.squarespace-cdn.com/content/641c5981823d0207a111bb74/62258732-45a6-4fca-a3ed-36bfa3fa3832/bot_animated.gif?content-type=image%2Fgif" alt="Chatbot" style="width: 60px; height: 60px;">
+    <img src="https://images.squarespace-cdn.com/content/641c5981823d0207a111bb74/da6525f0-7988-4a2b-b20b-6ca4e83a0db4/Bildschirmfoto+2024-12-09+um+15.09.34.png?content-type=image%2Fpng" alt="Chatbot" style="width: 60px; height: 60px;">
 `;
 document.body.appendChild(chatbotButton);
     
@@ -255,45 +271,33 @@ let isChatbotOpen = false;
         document.body.appendChild(script);
     }
 
-function initializeChatbot() {
-    const closeIconHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-            <path fill="currentColor" d="M18.3 5.71a1 1 0 0 0-1.42 0L12 10.59 7.12 5.71a1 1 0 0 0-1.42 1.42L10.59 12l-4.89 4.88a1 1 0 0 0 1.42 1.42L12 13.41l4.88 4.89a1 1 0 0 0 1.42-1.42L13.41 12l4.89-4.88a1 1 0 0 0 0-1.41z"/>
-        </svg>
-    `;
+    function initializeChatbot() {
+        
 
-    const openIconHTML = `
-        <img src="https://images.squarespace-cdn.com/content/641c5981823d0207a111bb74/62258732-45a6-4fca-a3ed-36bfa3fa3832/bot_animated.gif?content-type=image%2Fgif" alt="Chatbot" style="width: 60px; height: 60px;">
-    `;
-
-    chatbotButton.addEventListener('click', function() {
-        if (window.botpress) {
-            if (isChatbotOpen) {
-                if (typeof window.botpress.close === 'function') {
-                    window.botpress.close();
-                    isChatbotOpen = false;
-                    chatbotButton.innerHTML = openIconHTML;
-                    chatbotButton.classList.remove('close-icon'); // Remove close icon class
-                    console.log('Chatbot closed');
+        chatbotButton.addEventListener('click', function() {
+            if (window.botpress) {
+                if (isChatbotOpen) {
+                    if (typeof window.botpress.close === 'function') {
+                        window.botpress.close();
+                        isChatbotOpen = false;
+                        console.log('Chatbot closed');
+                    } else {
+                        console.error('Botpress close function is not available');
+                    }
                 } else {
-                    console.error('Botpress close function is not available');
+                    if (typeof window.botpress.open === 'function') {
+                        window.botpress.open();
+                        isChatbotOpen = true;
+                        console.log('Chatbot opened');
+                    } else {
+                        console.error('Botpress open function is not available');
+                    }
                 }
             } else {
-                if (typeof window.botpress.open === 'function') {
-                    window.botpress.open();
-                    isChatbotOpen = true;
-                    chatbotButton.innerHTML = closeIconHTML;
-                    chatbotButton.classList.add('close-icon'); // Add close icon class
-                    console.log('Chatbot opened');
-                } else {
-                    console.error('Botpress open function is not available');
-                }
+                console.error('Botpress is not initialized');
             }
-        } else {
-            console.error('Botpress is not initialized');
-        }
-    });
-}
+        });
+    }
 
     loadScript('https://your-gpt.github.io/widget/config.js', () => {
         loadScript(config.injectUrl, () => {
@@ -385,12 +389,12 @@ function getCurrentPage() {
   const path = window.location.pathname;
   if (path === '/' || path === '/index.html') {
     return 'home';
-  } else if (path.includes('unternehmen')) {
+  } else if (path.includes('ueber-uns')) {
     return 'ueber-uns';
-  } else if (path.includes('immobilienangebote')) {
-    return 'angebot';
-  } else if (path.includes('kontakt')) {
-    return 'kontakt';
+  } else if (path.includes('bueroreinigung')) {
+    return 'bueroreinigung';
+  } else if (path.includes('kitareinigung')) {
+    return 'kitareinigung';
   } else {
     return 'other';
   }
@@ -480,11 +484,11 @@ function getCurrentPage() {
       case 'ueber-uns':
         message = '💭 Haben Sie Fragen zu unserem Unternehmen?';
         break;
-      case 'angebot':
-        message = '🏠 Suchen Sie etwas Bestimmtes?';
+      case 'bueroreinigung':
+        message = '💼 Ich kann Ihnen bei Fragen zur Büroreinigung helfen.';
         break;
-      case 'kontakt':
-        message = 'Möchten Sie Kontakt aufnehmen?';
+      case 'kitareinigung':
+        message = '🏠 Haben Sie Fragen zur Kitareinigung?';
         break;
       default:
         message = 'Haben Sie Fragen? Ich bin hier, um zu helfen!';
