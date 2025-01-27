@@ -309,7 +309,9 @@
   const privacyConsent = document.createElement('div');
   privacyConsent.className = 'privacy-consent';
   privacyConsent.innerHTML = `
-      <div class="privacy-consent-text">Um Ihnen den bestmöglichen Service zu bieten, verwendet unser Chatbot Cookies und verarbeitet Ihre Daten. Bitte stimmen Sie der Datenverarbeitung zu.</div>
+      <div class="privacy-consent-text">
+    Um Ihnen den bestmöglichen Service zu bieten, verwendet unser Chatbot Cookies und verarbeitet Ihre Daten. Bitte stimmen Sie der <a href="https://singulary.net/datenschutz">Datenverarbeitung</a> zu.
+      </div>
       <div class="privacy-consent-buttons">
           <button class="privacy-consent-accept">Akzeptieren</button>
           <button class="privacy-consent-decline">Ablehnen</button>
