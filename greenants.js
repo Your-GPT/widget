@@ -20,6 +20,10 @@
       line-height: 1.5;
     }
 
+    .privacy-link {
+    text-decoration: underline;
+    }
+
     .privacy-consent.show {
       display: block;
     }
@@ -310,7 +314,7 @@
   privacyConsent.className = 'privacy-consent';
   privacyConsent.innerHTML = `
       <div class="privacy-consent-text">
-    Um Ihnen den bestmöglichen Service zu bieten, verwendet unser Chatbot Cookies und verarbeitet Ihre Daten. Bitte stimmen Sie der <a href="https://singulary.net/datenschutz">Datenverarbeitung</a> zu.
+    Um Ihnen den bestmöglichen Service zu bieten, verwendet unser Chatbot Cookies und verarbeitet Ihre Daten. Bitte stimmen Sie der <a href="https://singulary.net/datenschutz" class="privacy-link">Datenverarbeitung</a> zu.
       </div>
       <div class="privacy-consent-buttons">
           <button class="privacy-consent-accept">Akzeptieren</button>
