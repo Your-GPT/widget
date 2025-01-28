@@ -14,7 +14,7 @@
       transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.5s ease, opacity 0.5s ease;
       position: relative;
       overflow: hidden;
-      z-index: 2147483647 !important;
+      z-index: 9999 !important;
     }
 
     .cb-widget-button:hover {
@@ -98,7 +98,7 @@
       padding: 0;
       width: 60px;
       height: 60px;
-      z-index: 2147483647 !important;
+      z-index: 9999 !important;
     }
 
     .cb-chatbot-button img {
@@ -122,7 +122,7 @@
     flex-direction: column;
     align-items: flex-end;
     gap: 6px;
-    z-index: 2147483647 !important;
+    z-index: 9999 !important;
     transition: transform 0.5s ease, opacity 0.5s ease;
 }
       
