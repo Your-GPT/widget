@@ -92,7 +92,7 @@
 
     .cb-chatbot-button {
       position: fixed;
-      bottom: 84px;
+      bottom: 78px;
       right: 16px;
       transform: translateY(calc(100% + 10px));
       padding: 0;
@@ -163,13 +163,60 @@
   const styleElement = document.createElement('style');
   styleElement.textContent = styles;
   document.head.appendChild(styleElement);
+  
+  // After style element creation
+function loadScript(src, callback) {
+    const script = document.createElement('script');
+    script.src = src;
+    script.async = true;
+    script.onload = () => callback && callback();
+    script.onerror = () => console.error(`Failed to load script: ${src}`);
+    document.body.appendChild(script);
+}
+
+// Load bot immediately
+loadScript('https://your-gpt.github.io/widget/config.js', () => {
+    loadScript(config.injectUrl, () => {
+        window.botpress.init({
+            "botId": "4b5ad54f-b45b-4121-9e64-089a3062b552",
+            "clientId": "2dcbfd7b-4d36-4de8-9df7-be261494efae",
+            "configuration": {
+                "composerPlaceholder": "Schreiben Sie eine Nachricht...",
+                "botName": "AlbatrosGPT",
+                "botAvatar": "https://files.bpcontent.cloud/2025/01/13/18/20250113185223-33X3V00H.gif",
+                "botDescription": "Unsere KI beantwortet Ihre Fragen",
+                "website": {},
+                "email": {},
+                "phone": {},
+                "termsOfService": {},
+                "privacyPolicy": {},
+                "color": "#2D5F99",
+                "variant": "solid",
+                "themeMode": "light",
+                "fontFamily": "inter",
+                "radius": 2,
+                "additionalStylesheet": `
+                    .bpComposerPoweredBy {
+                        display: none;
+                    }
+                    .bp-widget-container {
+                        z-index: 2147483645 !important;
+                    }
+                    .bpHeaderContentDescription {
+                        display: none;
+                    }
+                `
+            }
+        });
+    });
+});
 
 
   const chatbotButton = document.createElement('div');
   chatbotButton.className = 'cb-widget-button cb-chatbot-button';
   chatbotButton.id = 'chatbotWidgetTrigger';
   chatbotButton.innerHTML = `
-      <img src="https://images.squarespace-cdn.com/content/641c5981823d0207a111bb74/999685ce-589d-4f5f-9763-4e094070fb4b/64e9502e4159bed6f8f57b071db5ac7e+%281%29.gif?content-type=image%2Fgif" alt="Chatbot" style="width: 60px; height: 60px;">
+      <img src="https://files.bpcontent.cloud/2025/01/13/18/20250113185223-33X3V00H.gif" style="width: 60px; height: 60px;">
   `;
   document.body.appendChild(chatbotButton);
   
@@ -179,76 +226,8 @@
   document.body.appendChild(chatPopupContainer);
 
   let isChatbotOpen = false;
-  let botScriptsLoaded = false;
-
-
-  function loadScript(src, callback) {
-      const script = document.createElement('script');
-      script.src = src;
-      script.async = true;
-      script.onload = () => callback && callback();
-      script.onerror = () => console.error(`Failed to load script: ${src}`);
-      document.body.appendChild(script);
-  }
-
-function loadBotScripts(openAfterLoad = false) {
-    if (botScriptsLoaded) return;
-    
-    loadScript('https://your-gpt.github.io/widget/config.js', () => {
-        loadScript(config.injectUrl, () => {
-            window.botpress.init({
-                "botId": "4b5ad54f-b45b-4121-9e64-089a3062b552",
-                "clientId": "2dcbfd7b-4d36-4de8-9df7-be261494efae",
-                "configuration": {
-                    "composerPlaceholder": "Schreiben Sie eine Nachricht...",
-                    "botName": "AlbatrosGPT",
-                    "botAvatar": "https://files.bpcontent.cloud/2025/01/13/18/20250113185223-33X3V00H.gif",
-                    "botDescription": "Unsere KI beantwortet Ihre Fragen",
-                    "website": {},
-                    "email": {},
-                    "phone": {},
-                    "termsOfService": {},
-                    "privacyPolicy": {},
-                    "color": "#2D5F99",
-                    "variant": "solid",
-                    "themeMode": "light",
-                    "fontFamily": "inter",
-                    "radius": 2,
-                    "additionalStylesheet": `
-                        .bpComposerPoweredBy {
-                            display: none;
-                        }
-                        .bpReset bpContainer {
-                            z-index: 9999;
-                        }
-                        .bp-widget-container {
-                            z-index: 9999 !important;
-                        }
-                        .bpHeaderContentDescription {
-                            display: none;
-                        }
-                    `
-                }
-            });
-            botScriptsLoaded = true;
-            if (openAfterLoad) {
-                setTimeout(() => {
-                    window.botpress.open();
-                    isChatbotOpen = true;
-                }, 100);
-            }
-        });
-    });
-}  
-
-
 
 chatbotButton.addEventListener('click', function() {
-    if (!botScriptsLoaded) {
-        loadBotScripts(true);
-        return;
-    }
-
     if (window.botpress) {
         if (isChatbotOpen) {
             window.botpress.close();
@@ -289,11 +268,6 @@ function showChatPopup(message, duration = false) {
 
     // Add click handler directly to the popup
 popup.addEventListener('click', function() {
-    if (!botScriptsLoaded) {
-        loadBotScripts(true);
-        return;
-    }
-
     if (window.botpress && typeof window.botpress.open === 'function') {
         window.botpress.open();
         isChatbotOpen = true;
