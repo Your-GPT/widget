@@ -29,7 +29,7 @@
       flex-direction: column-reverse;
       align-items: flex-end;
       gap: 0px;
-      z-index: 2147483647 !important;
+      z-index: 9999 !important;
     }
 
     .cb-chat-popup {
@@ -39,7 +39,7 @@
       padding: 12px 20px;
       border-radius: 20px 20px 0px 20px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      z-index: 2147483647 !important;
+      z-index: 9999 !important;
       font-size: 13px;
       max-width: 400px;
       width: max-content;
