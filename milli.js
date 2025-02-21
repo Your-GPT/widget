@@ -187,7 +187,7 @@ loadScript('https://your-gpt.github.io/widget/config.js', () => {
   chatbotButton.className = 'cb-widget-button cb-chatbot-button';
   chatbotButton.id = 'chatbotWidgetTrigger';
   chatbotButton.innerHTML = `
-      <img src="https://files.bpcontent.cloud/2025/01/13/18/20250113185223-33X3V00H.gif" style="width: 60px; height: 60px;">
+      <img src="https://files.bpcontent.cloud/2025/01/15/16/20250115163735-VIYG3WY0.gif" style="width: 60px; height: 60px;">
   `;
   document.body.appendChild(chatbotButton);
   
