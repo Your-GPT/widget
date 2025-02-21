@@ -154,7 +154,7 @@ loadScript('https://your-gpt.github.io/widget/config.js', () => {
             "configuration": {
                 "composerPlaceholder": "Schreiben Sie eine Nachricht...",
                 "botName": "PiezoGPT",
-                "botAvatar": "https://files.bpcontent.cloud/2025/01/13/18/20250113185223-33X3V00H.gif",
+                "botAvatar": "https://files.bpcontent.cloud/2025/01/17/10/20250117100946-BBJFYFQT.gif",
                 "botDescription": "Unsere KI beantwortet Ihre Fragen",
                 "website": {},
                 "email": {},
