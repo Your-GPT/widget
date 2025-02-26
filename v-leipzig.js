@@ -149,8 +149,8 @@ function loadScript(src, callback) {
 loadScript('https://your-gpt.github.io/widget/config.js', () => {
     loadScript(config.injectUrl, () => {
         window.botpress.init({
-            "botId": "a980b88f-da82-488b-ae97-f6deade5b3ac",
-            "clientId": "4fe90f6a-7fae-48d8-91e5-4a360bb34cf5",
+            "botId": "d63ff1bb-ba5d-4635-a076-7b2c13ae19bc",
+            "clientId": "60bc86aa-1f33-4f03-b35a-ec8ff6165a92",
             "configuration": {
                 "composerPlaceholder": "Schreiben Sie eine Nachricht...",
                 "botName": "Makler GPT",
