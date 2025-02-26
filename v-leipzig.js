@@ -153,7 +153,7 @@ loadScript('https://your-gpt.github.io/widget/config.js', () => {
             "clientId": "60bc86aa-1f33-4f03-b35a-ec8ff6165a92",
             "configuration": {
                 "composerPlaceholder": "Schreiben Sie eine Nachricht...",
-                "botName": "Makler GPT",
+                "botName": "VersicherungsGPT",
                 "botAvatar": "https://files.bpcontent.cloud/2025/01/15/16/20250115163735-VIYG3WY0.gif",
                 "botDescription": "Unsere KI beantwortet Ihre Fragen",
                 "website": {},
