@@ -4,6 +4,15 @@
       --widget-icon-color: #f2f2f2;
     }
 
+    /* Emoji Styling */
+    .emoji {
+      font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      font-size: 16px;
+      line-height: 1.4;
+      vertical-align: middle;
+      margin-right: 4px;
+    }
+
     /* Privacy Consent Styles */
     .privacy-consent {
       display: none;
@@ -364,13 +373,20 @@
   styleElement.textContent = styles;
   document.head.appendChild(styleElement);
 
- function setCookie(name, value, days) {
+  // Add meta tag for UTF-8 encoding if not already present
+  if (!document.querySelector('meta[charset="UTF-8"]')) {
+    const metaCharset = document.createElement('meta');
+    metaCharset.setAttribute('charset', 'UTF-8');
+    document.head.insertBefore(metaCharset, document.head.firstChild);
+  }
+
+  function setCookie(name, value, days) {
     const expires = new Date();
     expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
     document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;Secure;SameSite=Strict`;
-}
+  }
 
-function getCookie(name) {
+  function getCookie(name) {
     const nameEQ = name + "=";
     const ca = document.cookie.split(';');
     for(let i = 0; i < ca.length; i++) {
@@ -379,13 +395,13 @@ function getCookie(name) {
         if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
     }
     return null;
-}
+  }
 
-function revokeConsent() {
+  function revokeConsent() {
     setCookie('chatbot_consent', '', -1);
     hasConsented = false;
     location.reload();
-}
+  }
   
   const privacyConsent = document.createElement('div');
   privacyConsent.className = 'privacy-consent';
@@ -393,7 +409,7 @@ function revokeConsent() {
       <div class="privacy-consent-header">
         <div class="privacy-consent-title">Chatbot-Datenschutzeinstellungen</div>
         <div class="privacy-consent-text">
-          <span style="font-size: 10px;">Für die Nutzung unseres Chatbots (betrieben von Singulary in Deutschland) verarbeiten wir Ihre Chatverläufe und technische Daten. Die Datenverarbeitung erfolgt auf Grundlage Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen.</span>
+          <span style="font-size: 10px;">F&uuml;r die Nutzung unseres Chatbots (betrieben von Singulary in Deutschland) verarbeiten wir Ihre Chatverl&auml;ufe und technische Daten. Die Datenverarbeitung erfolgt auf Grundlage Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Sie k&ouml;nnen Ihre Einwilligung jederzeit mit Wirkung f&uuml;r die Zukunft widerrufen.</span>
         </div>
       </div>
       <div class="privacy-consent-categories">
@@ -406,9 +422,9 @@ function revokeConsent() {
             </label>
           </div>
           <div class="privacy-consent-category-description">
-            Technische Daten wie Session-ID und Einwilligungsstatus sind für den Betrieb des Chatbots erforderlich. Diese Daten werden lokal in Ihrem Browser gespeichert.
+            Technische Daten wie Session-ID und Einwilligungsstatus sind f&uuml;r den Betrieb des Chatbots erforderlich. Diese Daten werden lokal in Ihrem Browser gespeichert.
             <br><br>
-            <strong>Speicherdauer:</strong> Session / 1 Jahr für Einwilligungsstatus
+            <strong>Speicherdauer:</strong> Session / 1 Jahr f&uuml;r Einwilligungsstatus
           </div>
         </div>
         <div class="privacy-consent-category">
@@ -420,7 +436,7 @@ function revokeConsent() {
             </label>
           </div>
           <div class="privacy-consent-category-description">
-            Ihre Chatverläufe werden gespeichert, um den Kontext Ihrer Konversation zu erhalten und die Qualität unseres Chatbots zu verbessern. Die Daten werden auf Servern in der EU verarbeitet.
+            Ihre Chatverl&auml;ufe werden gespeichert, um den Kontext Ihrer Konversation zu erhalten und die Qualit&auml;t unseres Chatbots zu verbessern. Die Daten werden auf Servern in der EU verarbeitet.
             <br><br>
             <strong>Speicherdauer:</strong> 30 Tage
           </div>
@@ -434,7 +450,7 @@ function revokeConsent() {
             </label>
           </div>
           <div class="privacy-consent-category-description">
-            Mit Ihrer Zustimmung nutzen wir anonymisierte Chatverläufe, um unser KI-Modell zu trainieren und die Antworten zu verbessern. Diese Daten werden von Singulary in Deutschland verarbeitet und gespeichert.
+            Mit Ihrer Zustimmung nutzen wir anonymisierte Chatverl&auml;ufe, um unser KI-Modell zu trainieren und die Antworten zu verbessern. Diese Daten werden von Singulary in Deutschland verarbeitet und gespeichert.
             <br><br>
             <strong>Speicherdauer:</strong> 90 Tage
           </div>
@@ -442,10 +458,10 @@ function revokeConsent() {
       </div>
       <div class="privacy-consent-footer">
         <div class="privacy-consent-info">
-          <span style="font-size: 10px;">Sie können Ihre Einwilligung jederzeit widerrufen, indem Sie auf das Chatbot-Icon klicken und die Einstellungen erneut aufrufen.</span>
+          <span style="font-size: 10px;">Sie k&ouml;nnen Ihre Einwilligung jederzeit widerrufen, indem Sie auf das Chatbot-Icon klicken und die Einstellungen erneut aufrufen.</span>
         </div>
         <div class="privacy-consent-links">
-          <a href="/datenschutz" class="privacy-link" target="_blank">Datenschutzerklärung</a>
+          <a href="/datenschutz" class="privacy-link" target="_blank">Datenschutzerkl&auml;rung</a>
         </div>
       <div class="privacy-consent-buttons">
           <button class="privacy-consent-decline">Alle ablehnen</button>
@@ -471,133 +487,113 @@ function revokeConsent() {
   let isChatbotOpen = false;
   let hasConsented = false;
   let botScriptsLoaded = false;
+  let botInitialized = false;
 
-const savedConsent = getCookie('chatbot_consent');
-if (savedConsent === 'true') {
-    hasConsented = true;
-    loadBotScripts(); // Just load scripts, don't open bot
-}
-
-  function loadScript(src, callback) {
-      const script = document.createElement('script');
-      script.src = src;
-      script.async = true;
-      script.onload = () => callback && callback();
-      script.onerror = () => console.error(`Failed to load script: ${src}`);
-      document.body.appendChild(script);
+  const savedConsent = getCookie('chatbot_consent');
+  if (savedConsent === 'true') {
+    loadBotScripts(false); // Just load scripts, don't open bot
   }
 
-function loadBotScripts() {
-    if (botScriptsLoaded) return;
+  function loadScript(src, callback) {
+    const script = document.createElement('script');
+    script.src = src;
+    script.async = true;
+    script.onload = () => callback && callback();
+    script.onerror = () => console.error(`Failed to load script: ${src}`);
+    document.body.appendChild(script);
+  }
+
+  function initializeBot(openAfterInit = false) {
+    if (botInitialized) return;
+    
+    window.botpress.init({
+      "botId": "403c5df3-083a-4b4e-aadb-cabf511c4af6",
+      "clientId": "a257ce71-db9e-4f55-a3d7-fe037cbed968",
+      "configuration": {
+        "composerPlaceholder": "Schreiben Sie eine Nachricht...",
+        "botName": "Isicar GPT",
+        "botAvatar": "https://files.bpcontent.cloud/2025/01/20/15/20250120150034-H4MSRURH.gif",
+        "botDescription": "Unsere KI beantwortet Ihre Fragen",
+        "website": {},
+        "email": {},
+        "phone": {},
+        "termsOfService": {},
+        "privacyPolicy": {},
+        "color": "#C1CC4B",
+        "variant": "solid",
+        "themeMode": "light",
+        "fontFamily": "inter",
+        "radius": 2,
+        "additionalStylesheet": `
+          .bpComposerPoweredBy {
+            display: none;
+          }
+          .bpReset bpContainer {
+            z-index: 9999;
+          }
+          .bp-widget-container {
+            z-index: 9999 !important;
+          }
+          .bpHeaderContentDescription {
+            display: none;
+          }
+        `
+      }
+    });
+    
+    botInitialized = true;
+    
+    if (openAfterInit) {
+      // Use a more reliable approach with a slightly longer delay
+      setTimeout(() => {
+        if (window.botpress && typeof window.botpress.open === 'function') {
+          window.botpress.open();
+          isChatbotOpen = true;
+        }
+      }, 300);
+    }
+  }
+
+  function loadBotScripts(openAfterLoad = false) {
+    if (botScriptsLoaded) {
+      if (openAfterLoad && !isChatbotOpen) {
+        if (botInitialized && window.botpress && typeof window.botpress.open === 'function') {
+          window.botpress.open();
+          isChatbotOpen = true;
+        }
+      }
+      return;
+    }
     
     loadScript('https://your-gpt.github.io/widget/config.js', () => {
-        loadScript(config.injectUrl, () => {
-            window.botpress.init({
-                "botId": "403c5df3-083a-4b4e-aadb-cabf511c4af6",
-                "clientId": "a257ce71-db9e-4f55-a3d7-fe037cbed968",
-                "configuration": {
-                    "composerPlaceholder": "Schreiben Sie eine Nachricht...",
-                    "botName": "Isicar GPT",
-                    "botAvatar": "https://files.bpcontent.cloud/2025/01/20/15/20250120150034-H4MSRURH.gif",
-                    "botDescription": "Unsere KI beantwortet Ihre Fragen",
-                    "website": {},
-                    "email": {},
-                    "phone": {},
-                    "termsOfService": {},
-                    "privacyPolicy": {},
-                    "color": "#C1CC4B",
-                    "variant": "solid",
-                    "themeMode": "light",
-                    "fontFamily": "inter",
-                    "radius": 2,
-                    "additionalStylesheet": `
-                        .bpComposerPoweredBy {
-                            display: none;
-                        }
-                        .bpReset bpContainer {
-                            z-index: 9999;
-                        }
-                        .bp-widget-container {
-                            z-index: 9999 !important;
-                        }
-                        .bpHeaderContentDescription {
-                            display: none;
-                        }
-                    `
-                }
-            });
-            botScriptsLoaded = true;
-            // Removed window.botpress.open() and isChatbotOpen = true
-        });
+      loadScript(config.injectUrl, () => {
+        botScriptsLoaded = true;
+        initializeBot(openAfterLoad);
+      });
     });
-}  
+  }
 
-document.querySelector('.privacy-consent-accept').addEventListener('click', function() {
+  document.querySelector('.privacy-consent-accept').addEventListener('click', function() {
     hasConsented = true;
     document.querySelectorAll('.privacy-consent-toggle input').forEach(toggle => {
-        if (!toggle.disabled) toggle.checked = true;
+      if (!toggle.disabled) toggle.checked = true;
     });
     setCookie('chatbot_consent', 'true', 365); // Store consent for 1 year
     privacyConsent.classList.remove('show');
     
-    // Modified loadBotScripts call for first interaction
-    if (!botScriptsLoaded) {
-        loadScript('https://your-gpt.github.io/widget/config.js', () => {
-            loadScript(config.injectUrl, () => {
-                window.botpress.init({
-                    "botId": "403c5df3-083a-4b4e-aadb-cabf511c4af6",
-                    "clientId": "a257ce71-db9e-4f55-a3d7-fe037cbed968",
-                    "configuration": {
-                        "composerPlaceholder": "Schreiben Sie eine Nachricht...",
-                        "botName": "Isicar GPT",
-                        "botAvatar": "https://files.bpcontent.cloud/2025/01/20/15/20250120150034-H4MSRURH.gif",
-                        "botDescription": "Unsere KI beantwortet Ihre Fragen",
-                        "website": {},
-                        "email": {},
-                        "phone": {},
-                        "termsOfService": {},
-                        "privacyPolicy": {},
-                        "color": "#C1CC4B",
-                        "variant": "solid",
-                        "themeMode": "light",
-                        "fontFamily": "inter",
-                        "radius": 2,
-                        "additionalStylesheet": `
-                            .bpComposerPoweredBy {
-                                display: none;
-                            }
-                            .bpReset bpContainer {
-                                z-index: 9999;
-                            }
-                            .bp-widget-container {
-                                z-index: 9999 !important;
-                            }
-                            .bpHeaderContentDescription {
-                                display: none;
-                            }
-                        `
-                    }
-                });
-                botScriptsLoaded = true;
-                // Open the bot after initialization
-                setTimeout(() => {
-                    window.botpress.open();
-                    isChatbotOpen = true;
-                }, 100); // Small delay to ensure everything is ready
-            });
-        });
-    }
-});
+    // Load scripts and open the bot immediately after consent
+    loadBotScripts(true);
+  });
 
-document.querySelector('.privacy-consent-decline').addEventListener('click', function() {
+  document.querySelector('.privacy-consent-decline').addEventListener('click', function() {
     setCookie('chatbot_consent', 'false', 365); // Store decline for 1 year
     document.querySelectorAll('.privacy-consent-toggle input').forEach(toggle => {
-        if (!toggle.disabled) toggle.checked = false;
+      if (!toggle.disabled) toggle.checked = false;
     });
     privacyConsent.classList.remove('show');
-});
+  });
 
-document.querySelector('.privacy-consent-save').addEventListener('click', function() {
+  document.querySelector('.privacy-consent-save').addEventListener('click', function() {
     const analytics = document.querySelector('.analytics-consent').checked;
     const marketing = document.querySelector('.marketing-consent').checked;
     
@@ -608,181 +604,152 @@ document.querySelector('.privacy-consent-save').addEventListener('click', functi
     
     privacyConsent.classList.remove('show');
     
-    if (hasConsented && !botScriptsLoaded) {
-        loadScript('https://your-gpt.github.io/widget/config.js', () => {
-            loadScript(config.injectUrl, () => {
-                window.botpress.init({
-                    "botId": "bfa1ecc7-756c-4987-9e1b-141f03071764",
-                    "clientId": "3f12e265-1f11-4f38-85d8-6fd68e5e5175",
-                    "configuration": {
-                        "composerPlaceholder": "Schreiben Sie eine Nachricht...",
-                        "botName": "IbotechGPT",
-                        "botAvatar": "https://files.bpcontent.cloud/2025/01/20/15/20250120150034-H4MSRURH.gif",
-                        "botDescription": "Unsere KI beantwortet Ihre Fragen",
-                        "website": {},
-                        "email": {},
-                        "phone": {},
-                        "termsOfService": {},
-                        "privacyPolicy": {},
-                        "color": "#9C0E11",
-                        "variant": "solid",
-                        "themeMode": "light",
-                        "fontFamily": "inter",
-                        "radius": 2,
-                        "additionalStylesheet": `
-                            .bpComposerPoweredBy {
-                                display: none;
-                            }
-                            .bpReset bpContainer {
-                                z-index: 9999;
-                            }
-                            .bp-widget-container {
-                                z-index: 9999 !important;
-                            }
-                            .bpHeaderContentDescription {
-                                display: none;
-                            }
-                        `
-                    }
-                });
-                botScriptsLoaded = true;
-                // Open the bot after initialization
-                setTimeout(() => {
-                    window.botpress.open();
-                    isChatbotOpen = true;
-                }, 100); // Small delay to ensure everything is ready
-            });
-        });
+    if (hasConsented) {
+      // Load scripts and open the bot immediately after consent
+      // Using the same approach as in the 'Alle akzeptieren' handler
+      loadBotScripts(true);
+      
+      // Ensure the bot opens by adding a fallback
+      setTimeout(() => {
+        if (hasConsented && botScriptsLoaded && botInitialized && 
+            window.botpress && typeof window.botpress.open === 'function' && !isChatbotOpen) {
+          window.botpress.open();
+          isChatbotOpen = true;
+        }
+      }, 500);
     }
-});
+  });
 
-chatbotButton.addEventListener('click', function() {
+  chatbotButton.addEventListener('click', function() {
+    // Check if user has consented in this session
     if (!hasConsented) {
-        const savedConsent = getCookie('chatbot_consent');
-        if (savedConsent === 'true') {
-            hasConsented = true;
-            if (!botScriptsLoaded) {
-                loadBotScripts();
-            }
-        } else {
-            privacyConsent.classList.add('show');
-        }
-        return;
+      // If not consented, only show the consent banner
+      privacyConsent.classList.add('show');
+      return; // Important: stop here and don't open the bot
     }
-
+    
+    // If user has already consented in this session, handle the bot
     if (!botScriptsLoaded) {
-        loadBotScripts();
-        return;
+      loadBotScripts(true);
+      return;
     }
 
-    if (window.botpress) {
-        if (isChatbotOpen) {
-            window.botpress.close();
-            isChatbotOpen = false;
-        } else {
-            window.botpress.open();
-            isChatbotOpen = true;
-        }
+    if (window.botpress && typeof window.botpress.open === 'function') {
+      if (isChatbotOpen) {
+        window.botpress.close();
+        isChatbotOpen = false;
+      } else {
+        window.botpress.open();
+        isChatbotOpen = true;
+      }
     }
-});
+  });
 
   let shownPopups = new Set();
 
-
-window.addEventListener('scroll', function() {
+  window.addEventListener('scroll', function() {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     let scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     let scrollPercentage = (scrollTop / scrollHeight) * 100;
 
     // Second message at 50% scroll
     if (scrollPercentage >= 50 && !shownPopups.has('second')) {
-        showChatPopup(getSecondMessage(), 5000, false, 'second');
+      showChatPopup(getSecondMessage(), 5000, false, 'second');
     }
 
     // Contact message at 90% scroll
     if (scrollPercentage > 90 && !shownPopups.has('Nehmen Sie gerne Kontakt zu uns auf!')) {
-        showChatPopup('Nehmen Sie gerne Kontakt zu uns auf!', 7000);
+      showChatPopup('Nehmen Sie gerne Kontakt zu uns auf!', 7000);
     }
-});
+  });
 
-function showChatPopup(message, duration, socialIcons = false) {
+  function showChatPopup(message, duration, socialIcons = false) {
     if (shownPopups.has(message)) return;
     shownPopups.add(message);
 
     const popup = document.createElement('div');
     popup.className = 'cb-chat-popup';
-    popup.innerHTML = message;
+    
+    // Format emoji properly by wrapping it in a span
+    if (message.match(/[\u{1F300}-\u{1F6FF}]|[\u{1F900}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/u)) {
+      // Extract emoji and text
+      const emojiMatch = message.match(/^([\u{1F300}-\u{1F6FF}]|[\u{1F900}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}])/u);
+      if (emojiMatch) {
+        const emoji = emojiMatch[0];
+        const text = message.substring(emoji.length);
+        popup.innerHTML = `<span class="emoji">${emoji}</span>${text}`;
+      } else {
+        popup.textContent = message;
+      }
+    } else {
+      popup.textContent = message;
+    }
 
     // Add click handler directly to the popup
-popup.addEventListener('click', function() {
-    if (!hasConsented) {
-        const savedConsent = getCookie('chatbot_consent');
-        if (savedConsent === 'true') {
-            hasConsented = true;
-            if (!botScriptsLoaded) {
-                loadBotScripts();
-            }
-        } else {
-            privacyConsent.classList.add('show');
-        }
+    popup.addEventListener('click', function() {
+      // Check if user has consented in this session
+      if (!hasConsented) {
+        // If not consented, only show the consent banner
+        privacyConsent.classList.add('show');
+        return; // Important: stop here and don't open the bot
+      }
+      
+      // If user has already consented in this session, handle the bot
+      if (!botScriptsLoaded) {
+        loadBotScripts(true);
         return;
-    }
+      }
 
-    if (!botScriptsLoaded) {
-        loadBotScripts();
-        return;
-    }
-
-    if (window.botpress && typeof window.botpress.open === 'function') {
+      if (window.botpress && typeof window.botpress.open === 'function') {
         window.botpress.open();
         isChatbotOpen = true;
-    }
-});
+      }
+    });
 
     chatPopupContainer.insertBefore(popup, chatPopupContainer.firstChild);
 
     const existingPopups = chatPopupContainer.querySelectorAll('.cb-chat-popup');
     existingPopups.forEach((existingPopup, index) => {
-        if (index > 0) {
-            existingPopup.style.transform = `translateY(-${index * 100}%)`;
-        }
+      if (index > 0) {
+        existingPopup.style.transform = `translateY(-${index * 100}%)`;
+      }
     });
 
     setTimeout(() => {
-        popup.classList.add('show');
+      popup.classList.add('show');
     }, 100);
 
     setTimeout(() => {
-        popup.classList.remove('show');
-        popup.classList.add('hide');
-        setTimeout(() => {
-            chatPopupContainer.removeChild(popup);
-            const remainingPopups = chatPopupContainer.querySelectorAll('.cb-chat-popup');
-            remainingPopups.forEach((remainingPopup, index) => {
-                remainingPopup.style.transform = `translateY(-${index * 100}%)`;
-            });
-        }, 300);
+      popup.classList.remove('show');
+      popup.classList.add('hide');
+      setTimeout(() => {
+        if (popup.parentNode === chatPopupContainer) {
+          chatPopupContainer.removeChild(popup);
+          const remainingPopups = chatPopupContainer.querySelectorAll('.cb-chat-popup');
+          remainingPopups.forEach((remainingPopup, index) => {
+            remainingPopup.style.transform = `translateY(-${index * 100}%)`;
+          });
+        }
+      }, 300);
     }, duration);
-}
+  }
 
-
-// Basic version - Standard welcome message
-function isHomePage() {
+  // Basic version - Standard welcome message
+  function isHomePage() {
     const path = window.location.pathname;
     return path === '/' || path === '/index.html';
-}
+  }
 
-setTimeout(function() {
+  setTimeout(function() {
     const message = isHomePage()
-        ? '👋 Willkommen! Wie kann ich Ihnen helfen?'
-        : '💭 Haben Sie Fragen? Ich bin hier, um zu helfen!';
+      ? '👋 Willkommen! Wie kann ich Ihnen helfen?'
+      : 'Haben Sie Fragen? Ich bin hier, um zu helfen!';
     showChatPopup(message, 5000);
-}, 1500);
+  }, 1500);
 
-function getSecondMessage() {
+  function getSecondMessage() {
     return isHomePage()
-        ? '🔎 Haben Sie gefunden was Sie suchen?'
-        : 'Kann ich Ihnen bei etwas Bestimmtem helfen?';
-}
-
-})();
+      ? 'Haben Sie gefunden was Sie suchen?'
+      : 'Kann ich Ihnen bei etwas Bestimmtem helfen?';
+  }
+})(); 
