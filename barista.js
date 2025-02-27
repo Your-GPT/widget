@@ -489,10 +489,14 @@
   let botScriptsLoaded = false;
   let botInitialized = false;
 
+  // Check for saved consent
   const savedConsent = getCookie('chatbot_consent');
   if (savedConsent === 'true') {
-    loadBotScripts(false); // Just load scripts, don't open bot
+    hasConsented = true;
   }
+
+  // Load bot scripts immediately regardless of consent status
+  loadBotScripts(false);
 
   function loadScript(src, callback) {
     const script = document.createElement('script');
@@ -543,8 +547,8 @@
     
     botInitialized = true;
     
-    if (openAfterInit) {
-      // Use a more reliable approach with a slightly longer delay
+    // Only open the bot if user has consented AND we want to open after init
+    if (openAfterInit && hasConsented) {
       setTimeout(() => {
         if (window.botpress && typeof window.botpress.open === 'function') {
           window.botpress.open();
@@ -556,7 +560,8 @@
 
   function loadBotScripts(openAfterLoad = false) {
     if (botScriptsLoaded) {
-      if (openAfterLoad && !isChatbotOpen) {
+      // Only open the bot if user has consented
+      if (openAfterLoad && hasConsented && !isChatbotOpen) {
         if (botInitialized && window.botpress && typeof window.botpress.open === 'function') {
           window.botpress.open();
           isChatbotOpen = true;
@@ -581,8 +586,16 @@
     setCookie('chatbot_consent', 'true', 365); // Store consent for 1 year
     privacyConsent.classList.remove('show');
     
-    // Load scripts and open the bot immediately after consent
-    loadBotScripts(true);
+    // Open the bot immediately after consent (scripts should already be loaded)
+    if (botScriptsLoaded && botInitialized) {
+      if (window.botpress && typeof window.botpress.open === 'function') {
+        window.botpress.open();
+        isChatbotOpen = true;
+      }
+    } else {
+      // If scripts aren't loaded yet for some reason, load them with open flag
+      loadBotScripts(true);
+    }
   });
 
   document.querySelector('.privacy-consent-decline').addEventListener('click', function() {
@@ -605,9 +618,16 @@
     privacyConsent.classList.remove('show');
     
     if (hasConsented) {
-      // Load scripts and open the bot immediately after consent
-      // Using the same approach as in the 'Alle akzeptieren' handler
-      loadBotScripts(true);
+      // Open the bot immediately after consent (scripts should already be loaded)
+      if (botScriptsLoaded && botInitialized) {
+        if (window.botpress && typeof window.botpress.open === 'function') {
+          window.botpress.open();
+          isChatbotOpen = true;
+        }
+      } else {
+        // If scripts aren't loaded yet for some reason, load them with open flag
+        loadBotScripts(true);
+      }
       
       // Ensure the bot opens by adding a fallback
       setTimeout(() => {
