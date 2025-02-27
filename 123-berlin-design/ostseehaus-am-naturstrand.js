@@ -87,7 +87,7 @@ transition: transform 0.5s ease, opacity 0.5s ease;
     flex-direction: column-reverse;
     align-items: flex-end;
     gap: 0px;
-    z-index: 999;
+    z-index: 99999;
   }
 
   .cb-chat-popup {
@@ -96,7 +96,7 @@ transition: transform 0.5s ease, opacity 0.5s ease;
     color: #333333;
     padding: 12px 20px;
 border-radius: 20px 20px 0px 20px;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    z-index: 999;
+    z-index: 99999;
     font-size: 13px;
     max-width: 400px;
     width: max-content;
