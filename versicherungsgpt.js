@@ -18,7 +18,7 @@
       display: none;
       position: fixed;
       bottom: 20px;
-      right: 20px;
+      left: 20px;
       background: white;
       padding: 12px;
       border-radius: 8px;
@@ -461,7 +461,7 @@
           <span style="font-size: 10px;">Sie k&ouml;nnen Ihre Einwilligung jederzeit widerrufen, indem Sie auf das Chatbot-Icon klicken und die Einstellungen erneut aufrufen.</span>
         </div>
         <div class="privacy-consent-links">
-          <a href="/datenschutz" class="privacy-link" target="_blank">Datenschutzerkl&auml;rung</a>
+          <a href="https://www.versicherungsvergleich-leipzig.de/start-2/datenschutz/" class="privacy-link" target="_blank">Datenschutzerkl&auml;rung</a>
         </div>
       <div class="privacy-consent-buttons">
           <button class="privacy-consent-decline">Alle ablehnen</button>
