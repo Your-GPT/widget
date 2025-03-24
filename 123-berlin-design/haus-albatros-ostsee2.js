@@ -154,7 +154,7 @@ loadScript('https://your-gpt.github.io/widget/config.js', () => {
             "configuration": {
                 "composerPlaceholder": "Schreiben Sie eine Nachricht...",
                 "botName": "AlbatrosGPT",
-                "botAvatar": "https://files.bpcontent.cloud/2025/01/13/18/20250113185223-33X3V00H.gif",
+                "botAvatar": "https://images.squarespace-cdn.com/content/641c5981823d0207a111bb74/62258732-45a6-4fca-a3ed-36bfa3fa3832/bot_animated.gif?content-type=image%2Fgif",
                 "botDescription": "Unsere KI beantwortet Ihre Fragen",
                 "website": {},
                 "email": {},
@@ -187,7 +187,7 @@ loadScript('https://your-gpt.github.io/widget/config.js', () => {
   chatbotButton.className = 'cb-widget-button cb-chatbot-button';
   chatbotButton.id = 'chatbotWidgetTrigger';
   chatbotButton.innerHTML = `
-      <img src="https://files.bpcontent.cloud/2025/01/13/18/20250113185223-33X3V00H.gif" style="width: 60px; height: 60px;">
+      <img src="https://images.squarespace-cdn.com/content/641c5981823d0207a111bb74/62258732-45a6-4fca-a3ed-36bfa3fa3832/bot_animated.gif?content-type=image%2Fgif" style="width: 60px; height: 60px;">
   `;
   document.body.appendChild(chatbotButton);
   
