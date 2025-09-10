@@ -153,7 +153,7 @@ loadScript('https://your-gpt.github.io/widget/config.js', () => {
             "clientId": "372196b6-0712-4625-86fd-1f25fce24c32",
             "configuration": {
                 "composerPlaceholder": "Schreiben Sie eine Nachricht...",
-                "botName": "FischerGPT",
+                "botName": "SüdChat",
                 "botAvatar": "https://jiqndffacllyrwbercfc.supabase.co/storage/v1/object/public/products/caecf5bb-67ca-4c1c-8466-2d8a01200bf3/1739368665664.gif",
                 "botDescription": "Unsere KI beantwortet Ihre Fragen",
                 "website": {},
